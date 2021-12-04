@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FxController">
+   <center>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="500.0" prefWidth="400.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Text layoutX="41.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wecome To Cost Mangement System," textAlignment="CENTER" wrappingWidth="283.11328125">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
+                        <VBox alignment="TOP_CENTER" layoutX="56.0" layoutY="150.0" prefHeight="245.0" prefWidth="254.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="29.0" prefWidth="254.0" text="Username" />
+                              <TextField fx:id="Username" alignment="CENTER" prefHeight="34.0" prefWidth="254.0" styleClass="SigInPageTextBtn" stylesheets="@application.css" />
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="254.0" text="Password">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="UserPassword" alignment="CENTER" prefHeight="35.0" prefWidth="254.0" styleClass="SigInPageTextBtn" stylesheets="@application.css" />
+                              <Button fx:id="SignIn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#LoadSigInScreen" prefHeight="34.0" prefWidth="139.0" styleClass="SignInUpCenterbtn" stylesheets="@application.css" text="SIGN IN" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </center>
+   <left>
+      <HBox alignment="CENTER" prefHeight="500.0" prefWidth="234.0" styleClass="left_sidPane" stylesheets="@application.css" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Pane prefHeight="500.0" prefWidth="245.0">
+                     <children>
+                        <Text fill="WHITE" layoutX="58.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New here?" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="58.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign up to manage &#10;your project cost in an&#10;efficient manner." wrappingWidth="143.8310546875">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="SignUp" alignment="CENTER" contentDisplay="CENTER" layoutX="48.0" layoutY="308.0" mnemonicParsing="false" onAction="#LoadSignUpPage" prefHeight="34.0" prefWidth="139.0" styleClass="SidePaneBtn" stylesheets="@application.css" text="SIGN UP" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+               </children>
+            </GridPane>
+         </children></HBox>
+   </left>
+</BorderPane>

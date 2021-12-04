@@ -1,0 +1,92 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+/* Sign In Page styling goes here */
+.left_sidPane{
+	-fx-background-color: #3333ff;
+}
+
+.SigInPageTextBtn{
+	-fx-border-width:0px 0px 1px 0px;	
+	-fx-border-color: black;
+	-fx-background-color: none;
+}
+
+
+.SignInUpCenterbtn{
+	-fx-padding: 0px 5px;
+	-fx-background-color: #3333ff;
+	-fx-border-radius: 50px;
+	-fx-background-radius: 50px;
+	-fx-border-width:1px;	
+	
+}
+
+.SignInUpCenterbtn:hover {
+    -fx-background-color: #9999ff;
+    -fx-text-fill: #ffffff;
+}
+
+
+.SidePaneBtn{
+	-fx-padding: 0px 5px;
+	-fx-background-color: #3333ff;
+	-fx-border-radius: 50px;
+	-fx-background-radius: 50px;
+	-fx-border-width:1px;	
+	-fx-border-width:1px;	
+	-fx-border-style: solid;
+	-fx-text-fill: #ffffff;
+	-fx-border-color: #00004d;
+}
+
+.SidePaneBtn:hover{
+	-fx-background-color: #9999ff;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #00004d;
+    -fx-text-fill: #ffffff;
+    -fx-border-width:1px;	
+	-fx-border-style: solid;
+	-fx-border-color: #00008c;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.addSymbolbtn{
+	-fx-padding: 0px 5px;
+	-fx-background-color: #3333ff;
+	-fx-border-radius: 50px;
+	-fx-background-radius: 50px;
+	-fx-border-width:1px;	
+	
+}
+.addSymbolbtn:hover{
+	-fx-background-color: #00008c;
+}
+
+.MiddlePageColor{
+	-fx-background-color: #e6e6ff;
+}
+
+.Sidebar-btnnotActive{
+	-fx-background-color: none;
+	-fx-text-fill: black;
+	-fx-border-width:0px;	
+	-fx-text-fill: #fff;
+}
+.Sidebar-btnnotActive:hover {
+	-fx-border-width: 2px 2px 2px 2px;
+	-fx-border-style: solid;
+	-fx-border-color: #00008c;
+}
