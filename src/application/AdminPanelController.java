@@ -61,6 +61,8 @@ public class AdminPanelController {
     
     String bgcolor="-fx-background-color: #00008c;";
     String RemoveBg= "-fx-background-color: none;";
+    int index=0;
+    boolean b=true;
     
     void loadScene(ActionEvent event, String file) throws Exception{
     	AnchorPane root;
@@ -84,23 +86,28 @@ public class AdminPanelController {
     }
     
     @FXML
-    void initialize() throws Exception{
-    	ObservableList<String> list= FXCollections.observableArrayList("Project1", "Project2", "Project3", "Project4");
-    	if(combbox==null) {
-			System.out.println("Hi i am empty combobox");
-			return;
-		}
-    	combbox.setItems(list);
-    	combbox.getSelectionModel().select(0);
-    	Platform.runLater(new Runnable() {
-            public void run() {
-                final Node scrollBar = combbox.lookup(".scroll-bar:vertical");
-                scrollBar.setVisible(false);
-            }
-        });
+	void initialize() throws Exception{
+    	System.out.println("Hello World Anas");
+    	if(b)
+    	{
+    		ObservableList<String> list= FXCollections.observableArrayList("Project1", "Project2", "Project3", "Project4");
+	    	if(combbox==null) {
+				System.out.println("Hi i am empty combobox");
+				return;
+			}
+	    	combbox.setItems(list);
+	    	Platform.runLater(new Runnable() {
+	            public void run() {
+	                final Node scrollBar = combbox.lookup(".scroll-bar:vertical");
+	                scrollBar.setVisible(false);
+	            }
+	        });
+	    }
+    	combbox.getSelectionModel().select(index);
+    	b=false;
     }
     
-
+    
     @FXML
     void loadHome(ActionEvent event) throws Exception {
     	Home.setStyle(bgcolor);
@@ -119,10 +126,12 @@ public class AdminPanelController {
     
     @FXML
     void ShowMenuitem(ActionEvent event) throws Exception {
-    	System.out.println("Hello World");
+    	index= combbox.getSelectionModel().getSelectedIndex(); 
+    	System.out.println("Hello World"+index);
     	Home.setStyle("-fx-background-color: none;");
     	combbox.setStyle(bgcolor);
-    	loadScene(event, "ProjectPages.fxml");
+//    	loadScene(event, "ProjectPages.fxml");
+    	
     	
     }
     @FXML
