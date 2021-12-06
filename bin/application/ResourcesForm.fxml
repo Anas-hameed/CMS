@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
+   <children>
+      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" percentWidth="27.0" prefWidth="0.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="588.0" minWidth="0.0" prefWidth="424.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="162.0" minHeight="0.0" prefHeight="78.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="472.0" minHeight="10.0" prefHeight="422.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox prefHeight="78.0" prefWidth="173.0" styleClass="left_sidPane" stylesheets="@application.css">
+               <children>
+                  <ImageView fitHeight="49.0" fitWidth="52.0">
+                     <image>
+                        <Image url="file:Images/1.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello Anas," wrappingWidth="84.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" top="35.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <VBox prefHeight="422.0" prefWidth="132.0" styleClass="left_sidPane" stylesheets="@application.css" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="Home" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="162.0" stylesheets="@application.css" text="Home">
+                     <styleClass>
+                        <String fx:value="Sidebar-btn" />
+                        <String fx:value="Sidebar-btnnotActive" />
+                     </styleClass>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <ComboBox fx:id="combbox" onAction="#ShowMenuitem" prefHeight="50.0" prefWidth="162.0" promptText="Projects" stylesheets="@application.css" visibleRowCount="12">
+                     <styleClass>
+                        <String fx:value="Sidebar-btn" />
+                        <String fx:value="Sidebar-btnnotActive" />
+                        <String fx:value="Projectslider" />
+                     </styleClass>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ComboBox>
+                  <Button fx:id="Logout" layoutX="10.0" layoutY="154.0" mnemonicParsing="false" onAction="#loadlogoutAction" prefHeight="48.0" prefWidth="162.0" styleClass="Sidebar-btnnotActive" stylesheets="@application.css" text="Log Out">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <GridPane GridPane.columnIndex="1" GridPane.rowSpan="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="158.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="160.0" minHeight="0.0" prefHeight="153.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="391.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="181.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TableView prefHeight="196.0" prefWidth="438.0" GridPane.rowIndex="3">
+                    <columns>
+                      <TableColumn prefWidth="204.0" text="Human Resources" />
+                      <TableColumn minWidth="0.0" prefWidth="233.0" text="Tech Resources" />
+                    </columns>
+                  </TableView>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Text fx:id="ProjectName" layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Name" wrappingWidth="410.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="8.892578125">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Human Resources" wrappingWidth="421.11328125">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="taskDetails" layoutX="14.0" layoutY="113.0" prefHeight="25.0" prefWidth="310.0" promptText="Enter task Details" styleClass="Inputs" stylesheets="@application.css" />
+                        <DatePicker fx:id="TaskStartDate" layoutX="14.0" layoutY="77.0" promptText="Start Date" styleClass="Inputs" stylesheets="@application.css" />
+                        <DatePicker fx:id="TaskEndDate" layoutX="250.0" layoutY="77.0" promptText="Expeted End Date" styleClass="Inputs" stylesheets="@application.css" />
+                        <TextField fx:id="TaskName" layoutX="14.0" layoutY="41.0" prefHeight="25.0" prefWidth="410.0" promptText="Enter the Task Name" styleClass="Inputs" stylesheets="@application.css" />
+                        <Button fx:id="addTask" alignment="CENTER" layoutX="372.0" layoutY="120.0" mnemonicParsing="false" onAction="#addTaskAction" prefHeight="19.0" prefWidth="52.0" styleClass="Addbtn" stylesheets="@application.css" text="+Add" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="101.0" prefWidth="438.0" GridPane.rowIndex="2">
+                     <children>
+                        <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tech Resources" wrappingWidth="421.11328125">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Text>
+                        <ComboBox fx:id="combbox1" layoutX="14.0" layoutY="24.0" onAction="#ShowResources" prefHeight="33.0" prefWidth="174.0" promptText="Select Resouce type" stylesheets="@application.css" visibleRowCount="12">
+                           <styleClass>
+                              <String fx:value="Sidebar-btn" />
+                              <String fx:value="Sidebar-btnnotActive" />
+                              <String fx:value="Projectslider" />
+                              <String fx:value="Inputs" />
+                           </styleClass>
+                        </ComboBox>
+                        <Button fx:id="Addresource" alignment="CENTER" layoutX="372.0" layoutY="34.0" mnemonicParsing="false" onAction="#AddResourceAction" prefHeight="19.0" prefWidth="52.0" styleClass="Addbtn" stylesheets="@application.css" text="+Add" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <TextField fx:id="TaskName1" layoutX="225.0" layoutY="31.0" prefHeight="26.0" prefWidth="108.0" promptText="Number/Cost" styleClass="Inputs" stylesheets="@application.css" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                     <children>
+                        <Button fx:id="AddTask" alignment="CENTER" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#AddtaskPage" prefHeight="20.0" prefWidth="100.0" styleClass="Addbtn" stylesheets="@application.css" text="Add Tasks" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="Addresource11" alignment="CENTER" layoutX="325.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddResourceAction" prefHeight="20.0" prefWidth="100.0" styleClass="Addbtn" stylesheets="@application.css" text="Add Tasks" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

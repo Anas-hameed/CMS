@@ -50,17 +50,20 @@
 	-fx-border-color: #00008c;
 }
 
+.SidebarActiveBtn{
+	-fx-background-color: #00008c; 
+}
 
 
+/* Manager Panel Page styling goes Here */
 
+.MiddlePageColor{
+	-fx-background-color: #e6e6ff;
+}
 
-
-
-
-
-
-
-
+.CenterboxCard{
+	-fx-background-color: #fff;
+}
 
 
 .addSymbolbtn{
@@ -75,9 +78,7 @@
 	-fx-background-color: #00008c;
 }
 
-.MiddlePageColor{
-	-fx-background-color: #e6e6ff;
-}
+
 
 .Sidebar-btnnotActive{
 	-fx-background-color: none;
@@ -90,3 +91,84 @@
 	-fx-border-style: solid;
 	-fx-border-color: #00008c;
 }
+
+
+
+/*Here goes the project not  */
+.Projectslider{
+	-fx-text-fill: #fff;
+	
+}
+
+
+.combo-box .list-cell 
+{
+	-fx-alignment: 'center';
+    -fx-text-fill: #fff;
+    -fx-font-weight: bold;
+    -fx-padding: 0px 0.0px 0px 30px;
+    
+}
+
+.combo-box-popup .list-view 
+{
+    -fx-background-color: blue;
+}    
+
+.combo-box-popup .list-view .list-cell 
+{
+   -fx-background-color: white;
+   -fx-text-fill:black;
+   -fx-padding: 10px 0px;
+}
+
+.combo-box-popup .list-view .list-cell:hover{
+	-fx-background-color: #9c9cff;
+	-fx-text-fill: #fff;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected
+{
+    -fx-background-color: #000054;
+    -fx-text-fill: #fff;
+}
+
+
+/*Project Page button */
+.Inputs{
+	-fx-border-width:0px 0px 1px 0px;	
+	-fx-border-color: black;
+	-fx-background-color: none;
+}
+
+.date-picker-popup > .month-year-pane {
+    -fx-padding: 0.588883em 0.5em 0.666667em 0.5em; 
+    -fx-background-color: derive(#8a8aff,30%), 
+        linear-gradient(to bottom, derive(#8a8aff,-3%), 
+                                   derive(#8a8aff,5%) 50%, 
+                                   derive(#8a8aff,-3%));
+    -fx-background-insets: 0 0 0 0, 0 0 1 0;
+}
+
+.Addbtn{
+	-fx-padding: 0px 5px;
+	-fx-background-color: #3333ff;
+	-fx-border-radius: 50px;
+	-fx-background-radius: 50px;
+	-fx-border-width:1px;	
+	
+}
+.Addbtn:hover{
+	-fx-background-color: #00008c;
+}
+
+
+
+
+
+
+
+
+
+
+
