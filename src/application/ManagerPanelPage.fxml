@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
@@ -63,7 +64,7 @@
             </HBox>
             <VBox prefHeight="422.0" prefWidth="132.0" styleClass="left_sidPane" stylesheets="@application.css" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="Home" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: #00008c;" stylesheets="@application.css" text="Home">
+                  <Button fx:id="Home" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: #00008c;" stylesheets="@application.css" text="Add Project">
                      <styleClass>
                         <String fx:value="Sidebar-btn" />
                         <String fx:value="Sidebar-btnnotActive" />
@@ -95,10 +96,28 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="321.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="282.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="522.0" minHeight="10.0" prefHeight="522.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a Project" wrappingWidth="410.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="ProjectDetails" layoutX="14.0" layoutY="131.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter task Details" styleClass="Inputs" stylesheets="@application.css" />
+                        <DatePicker fx:id="ProjectStartDate" layoutX="14.0" layoutY="93.0" prefHeight="26.0" prefWidth="188.0" promptText="Start Date" styleClass="Inputs" stylesheets="@application.css" />
+                        <DatePicker fx:id="ProjectEndDate" layoutX="236.0" layoutY="93.0" prefHeight="26.0" prefWidth="188.0" promptText="Expeted End Date" styleClass="Inputs" stylesheets="@application.css" />
+                        <TextField fx:id="ProjectName" layoutX="14.0" layoutY="48.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter the Task Name" styleClass="Inputs" stylesheets="@application.css" />
+                        <Button fx:id="addProject" alignment="CENTER" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onAction="#addProjectAction" prefHeight="32.0" prefWidth="116.0" styleClass="Addbtn" stylesheets="@application.css" text="Add Project" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </children>
             </GridPane>
          </children>
       </GridPane>

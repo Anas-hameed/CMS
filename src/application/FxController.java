@@ -1,9 +1,6 @@
 package application;
 
 import java.io.IOException;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,10 +45,6 @@ public class FxController {
     @FXML
     private TableColumn<?, ?> Projecttable;
     
-
-    
-
-  
     
     private void loadBorderPaneScene(ActionEvent event, String file) {
     	try { 
@@ -95,11 +88,13 @@ public class FxController {
 
     }
     
+    
+    // Sign up page action goes here
     @FXML
     void LoadSignUp(ActionEvent event) {
     	
-    	
     }
+    
     @FXML
     void LoadSigInScreen(ActionEvent event) {
     	// authentication for the user required Here

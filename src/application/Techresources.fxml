@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
@@ -55,7 +56,6 @@
                   </Button>
                   <ComboBox fx:id="combbox" onAction="#ShowMenuitem" prefHeight="50.0" prefWidth="162.0" promptText="Projects" stylesheets="@application.css" visibleRowCount="12">
                      <styleClass>
-                        <String fx:value="Sidebar-btn" />
                         <String fx:value="Sidebar-btnnotActive" />
                         <String fx:value="Projectslider" />
                      </styleClass>
@@ -77,40 +77,48 @@
               <rowConstraints>
                 <RowConstraints maxHeight="244.0" minHeight="0.0" prefHeight="244.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="220.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView prefHeight="235.0" prefWidth="438.0" GridPane.rowIndex="1">
+                  <TableView prefHeight="196.0" prefWidth="438.0" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn prefWidth="437.0" text="Tasks" />
+                      <TableColumn prefWidth="437.0" text="Tech Resources" />
                     </columns>
                   </TableView>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane prefHeight="232.0" prefWidth="438.0">
                      <children>
-                        <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Name" wrappingWidth="410.0">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="taskDetails" layoutX="18.0" layoutY="178.0" prefHeight="26.0" prefWidth="329.0" promptText="Enter task Details" styleClass="Inputs" stylesheets="@application.css" />
-                        <DatePicker fx:id="TaskStartDate" layoutX="18.0" layoutY="133.0" promptText="Start Date" styleClass="Inputs" stylesheets="@application.css" />
-                        <DatePicker fx:id="TaskEndDate" layoutX="250.0" layoutY="133.0" promptText="Expeted End Date" styleClass="Inputs" stylesheets="@application.css" />
-                        <TextField fx:id="TaskName" layoutX="14.0" layoutY="81.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter the Task Name" styleClass="Inputs" stylesheets="@application.css" />
-                        <Text layoutX="14.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Task " wrappingWidth="410.0">
+                        <Text layoutX="14.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tech Resources" wrappingWidth="421.11328125">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Text>
-                        <Button fx:id="addTask" alignment="CENTER" layoutX="366.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTaskAction" prefHeight="23.0" prefWidth="58.0" styleClass="Addbtn" stylesheets="@application.css" text="+Add" textFill="WHITE">
+                        <TextField fx:id="Quantity" layoutX="14.0" layoutY="136.0" prefHeight="26.0" prefWidth="410.0" promptText="Quantity/Units" styleClass="Inputs" stylesheets="@application.css" />
+                        <Button fx:id="addTechResources" alignment="CENTER" layoutX="366.0" layoutY="180.0" mnemonicParsing="false" onAction="#addtechResources" prefHeight="23.0" prefWidth="58.0" styleClass="Addbtn" stylesheets="@application.css" text="+Add" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
+                        <Text fx:id="ProjectName" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Name" wrappingWidth="410.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="12.734375">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="BaseCost" layoutX="14.0" layoutY="178.0" prefHeight="26.0" prefWidth="315.0" promptText="Base Cost" styleClass="Inputs" stylesheets="@application.css" />
+                        <ComboBox fx:id="TechResourcesTypes" layoutX="14.0" layoutY="94.0" prefHeight="26.0" prefWidth="410.0" promptText="Select Resource" styleClass="EmptypeBtn" stylesheets="@application.css" visibleRowCount="12">
+                           <padding>
+                              <Insets left="-20.0" />
+                           </padding>
+                        </ComboBox>
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
-                        <Button fx:id="AddResourcesBtn" alignment="CENTER" layoutX="294.0" layoutY="10.0" mnemonicParsing="false" onAction="#AddResourcesPage" prefHeight="26.0" prefWidth="130.0" styleClass="Addbtn" stylesheets="@application.css" text="+Add Resources" textFill="WHITE">
+                        <Button fx:id="GobackResource" alignment="CENTER" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#GobackResourcePage" prefHeight="26.0" prefWidth="100.0" styleClass="Addbtn" stylesheets="@application.css" text="Go Back" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="Techresources" alignment="CENTER" layoutX="294.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadtechresources" prefHeight="26.0" prefWidth="130.0" styleClass="Addbtn" stylesheets="@application.css" text="Show Results" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>

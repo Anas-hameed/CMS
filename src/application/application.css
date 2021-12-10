@@ -92,34 +92,30 @@
 	-fx-border-color: #00008c;
 }
 
-
-
 /*Here goes the project not  */
-.Projectslider{
-	-fx-text-fill: #fff;
-	
+ .Projectslider{
+	-fx-text-fill: #fff;	
 }
-
 
 .combo-box .list-cell 
 {
 	-fx-alignment: 'center';
     -fx-text-fill: #fff;
     -fx-font-weight: bold;
-    -fx-padding: 0px 0.0px 0px 30px;
-    
+    -fx-padding: 0px 0px 0px 30px;    
 }
 
-.combo-box-popup .list-view 
-{
-    -fx-background-color: blue;
+.combo-box-popup .list-view {
+	-fx-border-width: 0px;
+    -fx-background-color: none;
 }    
+
 
 .combo-box-popup .list-view .list-cell 
 {
    -fx-background-color: white;
    -fx-text-fill:black;
-   -fx-padding: 10px 0px;
+   -fx-padding: 10px 10px;
 }
 
 .combo-box-popup .list-view .list-cell:hover{
@@ -127,11 +123,27 @@
 	-fx-text-fill: #fff;
 }
 
-.combo-box-popup .list-view .list-cell:filled:selected
-{
+.combo-box-popup .list-view .list-cell:filled:selected{
     -fx-background-color: #000054;
     -fx-text-fill: #fff;
 }
+
+/*Employee type cell editing can be added here */
+.EmptypeBtn{
+	-fx-background-color: none;
+	-fx-border-width: 0px 0px 1px 0px;
+	-fx-border-style: solid;
+	-fx-border-color: #000000;
+	-fx-text-fill: black;
+}
+
+
+.EmptypeBtn .list-cell{
+    -fx-text-fill: rgba(0,0,0,1);
+    -fx-font-weight: normal;
+    -fx-alignment: 'center-left'; 
+}
+
 
 
 /*Project Page button */
@@ -161,14 +173,3 @@
 .Addbtn:hover{
 	-fx-background-color: #00008c;
 }
-
-
-
-
-
-
-
-
-
-
-
