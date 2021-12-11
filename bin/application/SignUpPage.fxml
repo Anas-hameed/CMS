@@ -15,13 +15,12 @@
                <children>
                   <AnchorPane prefHeight="500.0" prefWidth="400.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Text layoutX="41.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wecome To Cost Mangement System," textAlignment="CENTER" wrappingWidth="283.11328125">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Text>
-                        <VBox alignment="TOP_CENTER" layoutX="56.0" layoutY="150.0" prefHeight="245.0" prefWidth="254.0">
+                        <VBox alignment="TOP_CENTER" layoutX="56.0" layoutY="83.0" prefHeight="335.0" prefWidth="254.0">
                            <children>
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="29.0" prefWidth="254.0" text="Name" />
+                              <TextField fx:id="Name" alignment="CENTER" layoutX="10.0" layoutY="68.0" prefHeight="34.0" prefWidth="254.0" styleClass="SigInPageTextBtn" stylesheets="@application.css" />
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="29.0" prefWidth="254.0" text="Contact" />
+                              <TextField fx:id="Contact" alignment="CENTER" layoutX="10.0" layoutY="39.0" prefHeight="34.0" prefWidth="254.0" styleClass="SigInPageTextBtn" stylesheets="@application.css" />
                               <Label alignment="CENTER" prefHeight="29.0" prefWidth="254.0" text="Username" />
                               <TextField fx:id="Username" alignment="CENTER" prefHeight="34.0" prefWidth="254.0" styleClass="SigInPageTextBtn" stylesheets="@application.css" />
                               <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="254.0" text="Password">

@@ -52,6 +52,11 @@ public class FxController {
     @FXML
     private TableColumn<?, ?> Projecttable;
     
+    @FXML
+    private TextField Name;
+
+    @FXML
+    private TextField Contact;
     
     private void loadBorderPaneScene(ActionEvent event, String file) {
     	try { 
