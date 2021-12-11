@@ -104,9 +104,7 @@ public class FxController {
     // Sign up page action goes here
     @FXML
     void LoadSignUp(ActionEvent event) {
-//    	Username.setText("h2000");
-//    	UserPassword.setText("12345");
-    	dbHandler.saveorupdateObject(new ProjectManager("hunaid", "na", "h2000", "12345"));
+    	dbHandler.saveorupdateObject(new ProjectManager(Name.getText(), Contact.getText(), Username.getText(), UserPassword.getText()));
     }
     
     @FXML
@@ -114,10 +112,11 @@ public class FxController {
     	// authentication for the user required Here
     	Vector<String> managerinfo = dbHandler.verifyLogin(Username.getText(), UserPassword.getText());
     	if(managerinfo != null) {
-    		projectManager.setName(managerinfo.elementAt(0));
-    		projectManager.setContact(managerinfo.elementAt(1));
+    		projectManager.setEmpID(Integer.valueOf(managerinfo.elementAt(0)));
+    		projectManager.setName(managerinfo.elementAt(1));
+    		projectManager.setContact(managerinfo.elementAt(2));
     		projectManager.setUsername(Username.getText());
-    		projectManager.setUsername(UserPassword.getText());
+    		projectManager.setPassword(UserPassword.getText());
     		projectManager.setProjects(dbHandler.getProjects(projectManager));
     		loadAncherPaneScene(event, "ManagerPanelPage.fxml");
     	}

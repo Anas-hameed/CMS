@@ -1,5 +1,11 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import businesslogic.Project;
+import businesslogic.ProjectManager;
+import database.MySQLHandler;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +24,9 @@ import javafx.stage.Stage;
 
 public class AdminPanelController {
 
+	ProjectManager projectManager = ProjectManager.getInstance();
+	MySQLHandler dbHandler = MySQLHandler.getInstance();
+	
     @FXML
     private Button Logout;
     @FXML
@@ -44,10 +53,6 @@ public class AdminPanelController {
 
     @FXML
     private TextField ProjectDetails;
-
-    
-    
-    
     
     void loadScene(ActionEvent event, String file) throws Exception{
     	AnchorPane root;
@@ -72,20 +77,36 @@ public class AdminPanelController {
     
     @FXML
 	void initialize() throws Exception{
-    	System.out.println("Hello World Anas");
-    	ObservableList<String> list= FXCollections.observableArrayList("Project1", "Project2", "Project3", "Project4");
-    	if(combbox!=null) {
-			combbox.setItems(list);
-			combbox.getSelectionModel().select(0);
-			Platform.runLater(new Runnable() {
-				public void run() {
-					final Node scrollBar = combbox.lookup(".scroll-bar:vertical");
-					scrollBar.setVisible(false);
-				}
-			});
+    	List<Project> projects = dbHandler.getProjects(projectManager);    	
+    	List<String> projectNames = new ArrayList<String>();
+    	for (Project project : projects) {
+    		String pname = project.getName();
+    		if(pname.length() > 15) {
+    			String[] words = pname.split(" ");
+    			projectNames.add(words[0]);
+    		}
+    		else
+    			projectNames.add(project.getName());
 		}
-    }
-    
+    	ObservableList<String> list = null;
+    	if(projectNames.size() > 0)
+    		list = FXCollections.observableArrayList(projectNames);
+    	if(combbox!=null) {
+    		if(list == null)
+    			combbox.setPromptText("No Projects");
+    		else {
+    			combbox.setItems(list);
+    			combbox.getSelectionModel().select(0);
+    			Platform.runLater(new Runnable() {
+    				public void run() {
+    					final Node scrollBar = combbox.lookup(".scroll-bar:vertical");
+    					scrollBar.setVisible(false);
+    				}
+    			});
+			}
+			
+		}
+    }    
     
     @FXML
     void loadHome(ActionEvent event) throws Exception {
@@ -115,7 +136,10 @@ public class AdminPanelController {
     // Add project controller
     @FXML
     void addProjectAction(ActionEvent event) {
-    	
+    	Project project = new Project(ProjectName.getText(), ProjectDetails.getText(), ProjectStartDate.getValue(), ProjectEndDate.getValue(), 0);    	
+    	projectManager.getProjects().add(project);
+    	project.setProjectManager(projectManager);
+    	dbHandler.saveorupdateObject(project);
     }
 }
 

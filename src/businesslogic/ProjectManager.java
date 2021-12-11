@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class ProjectManager extends Employee {
 	private String username, password;
-	@OneToMany(mappedBy = "projectManager" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "projectManager", cascade = CascadeType.MERGE)
 	private List<Project> projects;
 	private final static ProjectManager INSTANCE = new ProjectManager();
 

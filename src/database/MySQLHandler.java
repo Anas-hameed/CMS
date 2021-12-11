@@ -48,6 +48,7 @@ public class MySQLHandler {
         session.close();
         Vector<String> managerStrings = new Vector<String>();
         if(list.size() == 1) {        	
+        	managerStrings.add(String.valueOf(list.get(0).getEmpID()));
         	managerStrings.add(list.get(0).getName());
         	managerStrings.add(list.get(0).getContact());
         	return managerStrings;
