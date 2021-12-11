@@ -1,6 +1,10 @@
 package application;
 
 import java.io.IOException;
+import java.util.Vector;
+
+import businesslogic.ProjectManager;
+import database.MySQLHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +21,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class FxController {
+	
+	ProjectManager projectManager = ProjectManager.getInstance();
+	MySQLHandler dbHandler = MySQLHandler.getInstance();
 
     @FXML
     private Button SignUp;
@@ -92,14 +99,24 @@ public class FxController {
     // Sign up page action goes here
     @FXML
     void LoadSignUp(ActionEvent event) {
-    	
+//    	Username.setText("h2000");
+//    	UserPassword.setText("12345");
+    	dbHandler.saveorupdateObject(new ProjectManager("hunaid", "na", "h2000", "12345"));
     }
     
     @FXML
     void LoadSigInScreen(ActionEvent event) {
     	// authentication for the user required Here
-    
-    	loadAncherPaneScene(event, "ManagerPanelPage.fxml");
+    	Vector<String> managerinfo = dbHandler.verifyLogin(Username.getText(), UserPassword.getText());
+    	if(managerinfo != null) {
+    		projectManager.setName(managerinfo.elementAt(0));
+    		projectManager.setContact(managerinfo.elementAt(1));
+    		projectManager.setUsername(Username.getText());
+    		projectManager.setUsername(UserPassword.getText());
+    		projectManager.setProjects(dbHandler.getProjects(projectManager));
+    		loadAncherPaneScene(event, "ManagerPanelPage.fxml");
+    	}
+    	
     }
     
     @FXML
