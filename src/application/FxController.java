@@ -10,12 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -104,12 +106,24 @@ public class FxController {
     // Sign up page action goes here
     @FXML
     void LoadSignUp(ActionEvent event) {
+    	if(Name.getText().isEmpty() || Username.getText().isEmpty() || UserPassword.getText().isEmpty() || Contact.getText().isEmpty()) {
+    		showDialog("Please enter all the properties");
+    		return;
+    		
+    	}
+    	showDialog("");
     	dbHandler.saveorupdateObject(new ProjectManager(Name.getText(), Contact.getText(), Username.getText(), UserPassword.getText()));
+    	showDialog("Sign Up Was Sucessfull!Go to Login Page");
     }
     
     @FXML
     void LoadSigInScreen(ActionEvent event) {
     	// authentication for the user required Here
+    	if(Username.getText().isEmpty() || UserPassword.getText().isEmpty()) {
+    		showDialog("User Name or Password can n't be Null");
+    		return;
+    	}
+    	
     	Vector<String> managerinfo = dbHandler.verifyLogin(Username.getText(), UserPassword.getText());
     	if(managerinfo != null) {
     		projectManager.setEmpID(Integer.valueOf(managerinfo.elementAt(0)));
@@ -126,8 +140,16 @@ public class FxController {
     @FXML
     void ShowMenuitem(ActionEvent event) {
     	System.out.println("Hello");
-
     }
+    
+    private void showDialog(String Msg) {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Information Dialog");
+    	alert.setHeaderText(null);
+    	alert.setContentText(Msg);
+    	alert.showAndWait();
+    	return;
+    } 
 
     
 }
