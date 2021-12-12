@@ -80,7 +80,20 @@ public class AdminPanelController {
     
     @FXML
 	void initialize() throws Exception{
-    	List<Project> projects = dbHandler.getProjects(projectManager);    	
+    	if(combbox!=null)
+    	{
+    		FetchData();
+    		Platform.runLater(new Runnable() {
+			public void run() {
+				final Node scrollBar = combbox.lookup(".scroll-bar:vertical");
+				scrollBar.setVisible(false);
+			}
+		});
+    	}
+    }  
+        
+    private void FetchData() {
+     	List<Project> projects = dbHandler.getProjects(projectManager);    	
     	List<String> projectNames = new ArrayList<String>();
     	for (Project project : projects) {
     		String pname = project.getName();
@@ -89,27 +102,17 @@ public class AdminPanelController {
     			projectNames.add(words[0]);
     		}
     		else
-    			projectNames.add(project.getName());
+    		projectNames.add(project.getName());
 		}
     	ObservableList<String> list = null;
     	if(projectNames.size() > 0)
-    		list = FXCollections.observableArrayList(projectNames);
-    	if(combbox!=null) {
-    		if(list == null)
-    			combbox.setPromptText("No Projects");
-    		else {
-    			combbox.setItems(list);
-    			combbox.getSelectionModel().select(0);
-    			Platform.runLater(new Runnable() {
-    				public void run() {
-    					final Node scrollBar = combbox.lookup(".scroll-bar:vertical");
-    					scrollBar.setVisible(false);
-    				}
-    			});
-			}
-			
-		}
-    }    
+    	list = FXCollections.observableArrayList(projectNames);
+		if(list == null)
+		combbox.setPromptText("No Projects");
+		else 
+		combbox.setItems(list);
+    }
+    
     
     @FXML
     void loadHome(ActionEvent event) throws Exception {
@@ -138,12 +141,11 @@ public class AdminPanelController {
       
     // Add project controller
     @FXML
-    void addProjectAction(ActionEvent event) {
+    void addProjectAction(ActionEvent event) throws Exception {
     	Project project = new Project(ProjectName.getText(), ProjectDetails.getText(), ProjectStartDate.getValue(), ProjectEndDate.getValue(), Integer.valueOf(Budget.getText()));    	
     	projectManager.getProjects().add(project);
     	project.setProjectManager(projectManager);
     	dbHandler.saveorupdateObject(project);
+    	loadScene(event, "ManagerPanelPage.fxml");
     }
 }
-
-
