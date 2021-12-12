@@ -27,17 +27,18 @@ public class AdminPanelController {
 	ProjectManager projectManager = ProjectManager.getInstance();
 	MySQLHandler dbHandler = MySQLHandler.getInstance();
 	
+	String bgcolor="-fx-background-color: #00008c;";
+    String RemoveBg= "-fx-background-color: none;";
+	
     @FXML
     private Button Logout;
+    
     @FXML
     private Button Home;
+    
     @FXML
-    private ComboBox<String> combbox;
-    
-    String bgcolor="-fx-background-color: #00008c;";
-    String RemoveBg= "-fx-background-color: none;";
-    
-    // Add project btn
+    private ComboBox<String> combbox;        
+
     @FXML
     private TextField ProjectName;
   
@@ -46,7 +47,9 @@ public class AdminPanelController {
     
     @FXML
     private DatePicker ProjectEndDate;
-
+    
+    @FXML
+    private TextField Budget;
 
     @FXML
     private Button addProject;
@@ -136,7 +139,7 @@ public class AdminPanelController {
     // Add project controller
     @FXML
     void addProjectAction(ActionEvent event) {
-    	Project project = new Project(ProjectName.getText(), ProjectDetails.getText(), ProjectStartDate.getValue(), ProjectEndDate.getValue(), 0);    	
+    	Project project = new Project(ProjectName.getText(), ProjectDetails.getText(), ProjectStartDate.getValue(), ProjectEndDate.getValue(), Integer.valueOf(Budget.getText()));    	
     	projectManager.getProjects().add(project);
     	project.setProjectManager(projectManager);
     	dbHandler.saveorupdateObject(project);

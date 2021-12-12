@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.layout.BorderPane?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -106,16 +113,16 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="ProjectDetails" layoutX="14.0" layoutY="165.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter task Details" styleClass="Inputs" stylesheets="@application.css" />
+                        <TextField fx:id="ProjectDetails" layoutX="14.0" layoutY="165.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter Project Details" styleClass="Inputs" stylesheets="@application.css" />
                         <DatePicker fx:id="ProjectStartDate" layoutX="14.0" layoutY="127.0" prefHeight="26.0" prefWidth="188.0" promptText="Start Date" styleClass="Inputs" stylesheets="@application.css" />
                         <DatePicker fx:id="ProjectEndDate" layoutX="236.0" layoutY="127.0" prefHeight="26.0" prefWidth="188.0" promptText="Expeted End Date" styleClass="Inputs" stylesheets="@application.css" />
-                        <TextField fx:id="ProjectName" layoutX="14.0" layoutY="48.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter the project Name" styleClass="Inputs" stylesheets="@application.css" />
+                        <TextField fx:id="ProjectName" layoutX="14.0" layoutY="48.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter the Project Name" styleClass="Inputs" stylesheets="@application.css" />
                         <Button fx:id="addProject" alignment="CENTER" layoutX="14.0" layoutY="211.0" mnemonicParsing="false" onAction="#addProjectAction" prefHeight="32.0" prefWidth="116.0" styleClass="Addbtn" stylesheets="@application.css" text="Add Project" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="Budget" layoutX="14.0" layoutY="90.0" prefHeight="26.0" prefWidth="410.0" promptText="Specify the budget" styleClass="Inputs" stylesheets="@application.css" />
+                        <TextField fx:id="Budget" layoutX="14.0" layoutY="90.0" prefHeight="26.0" prefWidth="410.0" promptText="Specify the Budget" styleClass="Inputs" stylesheets="@application.css" />
                      </children>
                   </AnchorPane>
                </children>
