@@ -22,8 +22,7 @@ import javafx.stage.Stage;
 
 public class FxController {
 	
-	ProjectManager projectManager = ProjectManager.getInstance();
-	MySQLHandler dbHandler = MySQLHandler.getInstance();
+	ProjectManager projectManager = ProjectManager.getInstance();	
 
     @FXML
     private Button SignUp;
@@ -104,20 +103,24 @@ public class FxController {
     // Sign up page action goes here
     @FXML
     void LoadSignUp(ActionEvent event) {
-    	dbHandler.saveorupdateObject(new ProjectManager(Name.getText(), Contact.getText(), Username.getText(), UserPassword.getText()));
+    	projectManager.setName(Name.getText());
+    	projectManager.setContact(Contact.getText());
+    	projectManager.setUsername(Username.getText());
+    	projectManager.setPassword(UserPassword.getText());
+    	projectManager.saveProjectManager();
     }
     
     @FXML
     void LoadSigInScreen(ActionEvent event) {
     	// authentication for the user required Here
-    	Vector<String> managerinfo = dbHandler.verifyLogin(Username.getText(), UserPassword.getText());
+    	Vector<String> managerinfo = projectManager.verify(Username.getText(), UserPassword.getText());
     	if(managerinfo != null) {
     		projectManager.setEmpID(Integer.valueOf(managerinfo.elementAt(0)));
     		projectManager.setName(managerinfo.elementAt(1));
     		projectManager.setContact(managerinfo.elementAt(2));
     		projectManager.setUsername(Username.getText());
     		projectManager.setPassword(UserPassword.getText());
-    		projectManager.setProjects(dbHandler.getProjects(projectManager));
+    		projectManager.setProjects(projectManager.getProjectsfromDB());
     		loadAncherPaneScene(event, "ManagerPanelPage.fxml");
     	}
     	

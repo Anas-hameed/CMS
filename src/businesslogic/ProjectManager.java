@@ -1,8 +1,12 @@
 package businesslogic;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Vector;
 
 import javax.persistence.*;
+
+import database.MySQLHandler;
 
 @Entity
 public class ProjectManager extends Employee {
@@ -10,6 +14,8 @@ public class ProjectManager extends Employee {
 	@OneToMany(mappedBy = "projectManager", cascade = CascadeType.MERGE)
 	private List<Project> projects;
 	private final static ProjectManager INSTANCE = new ProjectManager();
+	@Transient
+	private MySQLHandler dbHandler = MySQLHandler.getInstance();
 
 	private ProjectManager() {
 		super("ProjectManager", null, null, 0);
@@ -49,6 +55,34 @@ public class ProjectManager extends Employee {
 		this.projects = projects;
 	}
 	
+	public MySQLHandler getDbHandler() {
+		return dbHandler;
+	}
+
+	public void setDbHandler(MySQLHandler dbHandler) {
+		this.dbHandler = dbHandler;
+	}
 	
+	public void saveProjectManager() {
+		dbHandler.saveorupdateObject(this);
+	}
+	
+	public void saveProject(Project project) {
+		projects.add(project);
+    	project.setProjectManager(this);
+		dbHandler.saveorupdateObject(project);
+	}
+		
+	public void addProjectTask(int index, String name, String description, LocalDate startDate, LocalDate endDate) {		
+		dbHandler.saveorupdateObject(projects.get(index).addTaskDetails(name, description, startDate, endDate));
+	}
+	
+	public List<Project> getProjectsfromDB() {
+		return dbHandler.getProjects(this);
+	}
+	
+	public Vector<String> verify(String un, String pass) {
+		return dbHandler.verifyLogin(un, pass);
+	}
 	
 }

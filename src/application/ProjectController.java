@@ -1,8 +1,15 @@
 package application;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import businesslogic.Project;
+import businesslogic.ProjectManager;
+import businesslogic.Task;
+import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +20,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +29,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ProjectController {
+	
+	ProjectManager projectManager = ProjectManager.getInstance();	
 
     @FXML
     private Text ProjectName;
@@ -90,6 +101,24 @@ public class ProjectController {
     
     @FXML
     private ComboBox<String> TechResourcesTypes;
+
+    @FXML
+    private TableColumn<Task, String> Description;
+
+    @FXML
+    private TableColumn<Task, LocalDate> EndDate;
+
+    @FXML
+    private TableColumn<Task, String> Name;
+
+    @FXML
+    private TableColumn<Task, LocalDate> StartDate;
+
+    @FXML
+    private TableColumn<Task, Integer> TaskID;
+
+    @FXML
+    private TableView<Task> TasksTable;
     
     
     // Controller value for the front-end Logic
@@ -102,12 +131,11 @@ public class ProjectController {
     
     @FXML
 	void initialize() throws Exception{
-    	System.out.println("Hello World Anas");
-    	ObservableList<String> list= FXCollections.observableArrayList("Project1", "Project2", "Project3", "Project4");
-    	if(combbox!=null) {
-			combbox.setItems(list);
-			combbox.getSelectionModel().select(Index);
-		}
+    	if(combbox!=null)
+    	{
+    		FetchData();
+    		
+    	}
     	Home.setStyle("-fx-background-color: none;");
     	combbox.setStyle(bgcolor);
     	if(SelectEmpTypeCombobox!=null) {
@@ -134,8 +162,40 @@ public class ProjectController {
 			TechResources.add("Project Manager");
 			TechResourcesTypes.getItems().addAll(TechResources);
 		}
+    	if(TasksTable != null)
+    		FetchTasks();
     	
-    	
+    } 
+        
+    private void FetchData() {
+     	List<Project> projects = projectManager.getProjectsfromDB();    	
+    	List<String> projectNames = new ArrayList<String>();
+    	for (Project project : projects) {
+    		String pname = project.getName();
+    		if(pname.length() > 15) {
+    			String[] words = pname.split(" ");
+    			projectNames.add(words[0]);
+    		}
+    		else
+    		projectNames.add(project.getName());
+		}
+    	ObservableList<String> list = null;
+    	if(projectNames.size() > 0)
+    		list = FXCollections.observableArrayList(projectNames);
+		if(list == null)
+			combbox.setPromptText("No Projects");
+		else 
+			combbox.setItems(list);
+    }
+    
+    private void FetchTasks() {
+    	ObservableList<Task> tasks = FXCollections.observableList(projectManager.getProjects().get(Index).getProjectTasksfromDB());  	
+     	Name.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getName()));
+     	Description.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getDescription()));
+     	StartDate.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<LocalDate>(CellDataFeatures.getValue().getStartDate()));
+     	EndDate.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<LocalDate>(CellDataFeatures.getValue().getEndDate()));
+    	TaskID.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Integer>(CellDataFeatures.getValue().getTaskID()));
+    	TasksTable.setItems(tasks);
     }
     
     void loadScene(ActionEvent event, String file) throws Exception{
@@ -193,7 +253,7 @@ public class ProjectController {
     // Task Page Actions
     @FXML
     void addTaskAction(ActionEvent event) {
-    	
+    	projectManager.addProjectTask(Index, TaskName.getText(), taskDetails.getText(), TaskStartDate.getValue(), TaskEndDate.getValue());
     }
     
     // Resource Page Actions

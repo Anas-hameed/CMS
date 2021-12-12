@@ -5,7 +5,6 @@ import java.util.List;
 
 import businesslogic.Project;
 import businesslogic.ProjectManager;
-import database.MySQLHandler;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +24,6 @@ import javafx.stage.Stage;
 public class AdminPanelController {
 
 	ProjectManager projectManager = ProjectManager.getInstance();
-	MySQLHandler dbHandler = MySQLHandler.getInstance();
 	
 	String bgcolor="-fx-background-color: #00008c;";
     String RemoveBg= "-fx-background-color: none;";
@@ -93,7 +91,7 @@ public class AdminPanelController {
     }  
         
     private void FetchData() {
-     	List<Project> projects = dbHandler.getProjects(projectManager);    	
+     	List<Project> projects = projectManager.getProjectsfromDB();    	
     	List<String> projectNames = new ArrayList<String>();
     	for (Project project : projects) {
     		String pname = project.getName();
@@ -108,9 +106,9 @@ public class AdminPanelController {
     	if(projectNames.size() > 0)
     	list = FXCollections.observableArrayList(projectNames);
 		if(list == null)
-		combbox.setPromptText("No Projects");
+			combbox.setPromptText("No Projects");
 		else 
-		combbox.setItems(list);
+			combbox.setItems(list);
     }
     
     
@@ -142,10 +140,8 @@ public class AdminPanelController {
     // Add project controller
     @FXML
     void addProjectAction(ActionEvent event) throws Exception {
-    	Project project = new Project(ProjectName.getText(), ProjectDetails.getText(), ProjectStartDate.getValue(), ProjectEndDate.getValue(), Integer.valueOf(Budget.getText()));    	
-    	projectManager.getProjects().add(project);
-    	project.setProjectManager(projectManager);
-    	dbHandler.saveorupdateObject(project);
+    	Project project = new Project(ProjectName.getText(), ProjectDetails.getText(), ProjectStartDate.getValue(), ProjectEndDate.getValue(), Integer.valueOf(Budget.getText()));
+    	projectManager.saveProject(project);
     	loadScene(event, "ManagerPanelPage.fxml");
     }
 }

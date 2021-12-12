@@ -67,4 +67,15 @@ public class MySQLHandler {
         return projects;
 	}
 	
+	public List<Task> getProjectTasks(Project project) {		        
+        Session session = sf.openSession();
+        Transaction trans = session.beginTransaction();
+        org.hibernate.query.Query<Task> query = session.createQuery("FROM Task WHERE project_projectID = :pid");
+        query.setParameter("pid", project.getProjectID());
+        List<Task> tasks = query.getResultList();                    
+        trans.commit();
+        session.close();
+        return tasks;
+	}
+	
 }

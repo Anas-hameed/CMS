@@ -1,9 +1,12 @@
 package businesslogic;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+
+import database.MySQLHandler;
 
 @Entity
 public class Project {
@@ -13,14 +16,16 @@ public class Project {
 	private String name, description;
 	private LocalDate startDate, endDate;
 	private double budget, variance;
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Task> tasks;
+	@OneToMany(mappedBy = "project", cascade = CascadeType.MERGE)
+	private List<Task> tasks = new ArrayList<Task>();
 	@OneToOne(cascade = CascadeType.ALL)
 	private TechResource techResource;
 	@OneToOne(cascade = CascadeType.ALL)
 	private HumanResource humanResource;
 	@ManyToOne(cascade = CascadeType.ALL)
 	private ProjectManager projectManager;
+	@Transient
+	private MySQLHandler dbHandler = MySQLHandler.getInstance();
 	
 	public Project() {
 		this.name = null;
@@ -129,8 +134,15 @@ public class Project {
 		this.tasks = tasks;
 	}
 	
-	public void addTaskDetails(String name, String description, LocalDate startDate, LocalDate endDate) {
-		tasks.add(new Task(name, description, startDate, endDate));
+	public List<Task> getProjectTasksfromDB() {
+		return dbHandler.getProjectTasks(this);
+	}
+	
+	public Task addTaskDetails(String name, String description, LocalDate startDate, LocalDate endDate) {
+		Task t = new Task(name, description, startDate, endDate);
+		tasks.add(t);
+		t.setProject(this);
+		return t;
 	}
 	
 	public double getActualCost() {

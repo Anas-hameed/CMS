@@ -11,6 +11,15 @@ public class Task {
 	private int taskID;
 	private String name, description;
 	private LocalDate startDate, endDate;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Project project;
+	
+	public Task() {
+		this.name = null;
+		this.description = null;
+		this.startDate = null;
+		this.endDate = null;
+	}
 	
 	public Task(String name, String description, LocalDate startDate, LocalDate endDate) {
 		this.name = name;
@@ -18,6 +27,22 @@ public class Task {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
+	
+	public int getTaskID() {
+		return taskID;
+	}
+
+	public void setTaskID(int taskID) {
+		this.taskID = taskID;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}	
 
 	public String getName() {
 		return name;
