@@ -108,22 +108,23 @@ public class FxController {
     void LoadSignUp(ActionEvent event) {
     	if(Name.getText().isEmpty() || Username.getText().isEmpty() || UserPassword.getText().isEmpty() || Contact.getText().isEmpty()) {
     		showDialog("Please enter all the properties");
-    		return;
-    		
+    		return;    		
     	}
-    	showDialog("");
     	dbHandler.saveorupdateObject(new ProjectManager(Name.getText(), Contact.getText(), Username.getText(), UserPassword.getText()));
-    	showDialog("Sign Up Was Sucessfull!Go to Login Page");
+    	showDialog("Sign Up Was Sucessfull!Go to Login Page!!!");
+    	Name.setText("");
+    	Contact.setText("");
+    	Username.setText("");
+    	UserPassword.setText("");
     }
     
     @FXML
     void LoadSigInScreen(ActionEvent event) {
     	// authentication for the user required Here
     	if(Username.getText().isEmpty() || UserPassword.getText().isEmpty()) {
-    		showDialog("User Name or Password can n't be Null");
+    		showDialog("User Name or Password can not be Null");
     		return;
-    	}
-    	
+    	}    	
     	Vector<String> managerinfo = dbHandler.verifyLogin(Username.getText(), UserPassword.getText());
     	if(managerinfo != null) {
     		projectManager.setEmpID(Integer.valueOf(managerinfo.elementAt(0)));
@@ -149,7 +150,5 @@ public class FxController {
     	alert.setContentText(Msg);
     	alert.showAndWait();
     	return;
-    } 
-
-    
+    }     
 }
