@@ -78,4 +78,15 @@ public class MySQLHandler {
         return tasks;
 	}
 	
+	public List<Employee> getEmployees(HumanResource humanResource) {		        
+        Session session = sf.openSession();
+        Transaction trans = session.beginTransaction();
+        org.hibernate.query.Query<Employee> query = session.createQuery("FROM Employee WHERE HR_resourceID = :rid");
+        query.setParameter("rid", humanResource.getResourceID());
+        List<Employee> employees = query.getResultList();                    
+        trans.commit();
+        session.close();
+        return employees;
+	}
+	
 }

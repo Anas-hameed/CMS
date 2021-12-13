@@ -21,7 +21,7 @@ public class Project {
 	@OneToOne(cascade = CascadeType.ALL)
 	private TechResource techResource;
 	@OneToOne(cascade = CascadeType.ALL)
-	private HumanResource humanResource;
+	private HumanResource humanResource = new HumanResource();
 	@ManyToOne(cascade = CascadeType.ALL)
 	private ProjectManager projectManager;
 	@Transient
@@ -136,6 +136,12 @@ public class Project {
 	
 	public List<Task> getProjectTasksfromDB() {
 		return dbHandler.getProjectTasks(this);
+	}
+	
+	public void saveHumanResource(Employee employee) {		
+		humanResource.saveEmployee(employee);
+		humanResource.setCost(humanResource.getCost());
+		dbHandler.saveorupdateObject(humanResource);
 	}
 	
 	public Task addTaskDetails(String name, String description, LocalDate startDate, LocalDate endDate) {

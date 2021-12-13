@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import businesslogic.Employee;
 import businesslogic.Project;
 import businesslogic.ProjectManager;
 import businesslogic.Task;
@@ -78,10 +79,10 @@ public class ProjectController {
     private TextField ContactInfo;
 
     @FXML
-    private ComboBox<String> SelectEmpTypeCombobox;
-
-    @FXML
     private TextField EmpName;
+    
+    @FXML
+    private TextField Position;
     
     // Tech Resources Values
     @FXML
@@ -120,6 +121,24 @@ public class ProjectController {
     @FXML
     private TableView<Task> TasksTable;
     
+    @FXML
+    private TableView<Employee> EmpTable;
+
+    @FXML
+    private TableColumn<Employee, String> EmpTableContact;
+
+    @FXML
+    private TableColumn<Employee, Integer> EmpTableID;
+
+    @FXML
+    private TableColumn<Employee, String> EmpTableName;
+
+    @FXML
+    private TableColumn<Employee, String> EmpTablePosition;
+
+    @FXML
+    private TableColumn<Employee, Double> EmpTableSalary;
+    
     
     // Controller value for the front-end Logic
     String bgcolor="-fx-background-color: #00008c;";
@@ -138,16 +157,16 @@ public class ProjectController {
     	}
     	Home.setStyle("-fx-background-color: none;");
     	combbox.setStyle(bgcolor);
-    	if(SelectEmpTypeCombobox!=null) {
-    		SelectEmpTypeCombobox.setPromptText("Select the Employee Type");
-	    	EmpOption = new ArrayList<String>();
-	    	EmpOption.add("Developer");
-	    	EmpOption.add("Designer");
-	    	EmpOption.add("Network Manager");
-	    	EmpOption.add("Resource Manager");
-	    	EmpOption.add("Project Manager");
-	    	SelectEmpTypeCombobox.getItems().addAll(EmpOption);
-    	}
+//    	if(SelectEmpTypeCombobox!=null) {
+//    		SelectEmpTypeCombobox.setPromptText("Select the Employee Type");
+//	    	EmpOption = new ArrayList<String>();
+//	    	EmpOption.add("Developer");
+//	    	EmpOption.add("Designer");
+//	    	EmpOption.add("Network Manager");
+//	    	EmpOption.add("Resource Manager");
+//	    	EmpOption.add("Project Manager");
+//	    	SelectEmpTypeCombobox.getItems().addAll(EmpOption);
+//    	}
     	
     	// Tech Resources
     	if(TechResourcesTypes!=null)
@@ -164,6 +183,8 @@ public class ProjectController {
 		}
     	if(TasksTable != null)
     		FetchTasks();
+    	if(EmpTable != null)
+    		FetchEmployees();
     	
     } 
         
@@ -198,6 +219,16 @@ public class ProjectController {
     	TasksTable.setItems(tasks);
     }
     
+    private void FetchEmployees() {
+    	ObservableList<Employee> employees = FXCollections.observableList(projectManager.getProjects().get(Index).getHumanResource().getEmployeesfromDB());  	
+    	EmpTableName.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getName()));
+    	EmpTableContact.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getContact()));
+    	EmpTablePosition.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getPosition()));
+    	EmpTableSalary.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Double>(CellDataFeatures.getValue().getSalary()));
+    	EmpTableID.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Integer>(CellDataFeatures.getValue().getEmpID()));
+    	EmpTable.setItems(employees);
+    }
+    
     void loadScene(ActionEvent event, String file) throws Exception{
     	AnchorPane root;
 		root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
@@ -216,8 +247,7 @@ public class ProjectController {
 		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		primaryStage.setScene(scene);
 		primaryStage.show();
-    }
-    
+    }    
     
     @FXML
     void loadHome(ActionEvent event) throws Exception {
@@ -270,7 +300,7 @@ public class ProjectController {
     
     @FXML
     void AddResourceAction(ActionEvent event) {
-
+    	projectManager.getProjects().get(Index).saveHumanResource(new Employee(Position.getText(), EmpName.getText(), ContactInfo.getText(), Integer.valueOf(Salary.getText())));
     }
     
 
