@@ -27,13 +27,13 @@
                <children>
                   <ImageView fitHeight="49.0" fitWidth="52.0">
                      <image>
-                        <Image url="file:Images/1.png" />
+                        <Image url="@Images/1.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="10.0" top="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello Anas," wrappingWidth="84.0">
+                  <Text fx:id="MangerGreeting" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello Anas," wrappingWidth="84.0">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -104,7 +104,7 @@
                            </font>
                         </Text>
                         <TextField fx:id="BaseCost" layoutX="14.0" layoutY="178.0" prefHeight="26.0" prefWidth="315.0" promptText="Base Cost" styleClass="Inputs" stylesheets="@application.css" />
-                        <ComboBox fx:id="TechResourcesTypes" layoutX="14.0" layoutY="94.0" prefHeight="26.0" prefWidth="410.0" promptText="Select Resource" styleClass="EmptypeBtn" stylesheets="@application.css" visibleRowCount="12">
+                        <ComboBox fx:id="TechResourcesTypes" layoutX="14.0" layoutY="94.0" prefHeight="26.0" prefWidth="410.0" promptText="Select tech Resource type" styleClass="EmptypeBtn" stylesheets="@application.css" visibleRowCount="12">
                            <padding>
                               <Insets left="-20.0" />
                            </padding>

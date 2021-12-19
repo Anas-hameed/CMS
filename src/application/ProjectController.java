@@ -8,7 +8,6 @@ import businesslogic.Employee;
 import businesslogic.Project;
 import businesslogic.ProjectManager;
 import businesslogic.Task;
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -18,12 +17,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -139,6 +140,9 @@ public class ProjectController {
     @FXML
     private TableColumn<Employee, Double> EmpTableSalary;
     
+    @FXML
+    private Text MangerGreeting;
+    
     
     // Controller value for the front-end Logic
     String bgcolor="-fx-background-color: #00008c;";
@@ -150,35 +154,30 @@ public class ProjectController {
     
     @FXML
 	void initialize() throws Exception{
+    	Home.setStyle("-fx-background-color: none;");
+    	combbox.setStyle(bgcolor);
+    	if(MangerGreeting!=null)
+    	{
+    		String nm= projectManager.getName();
+    		String temp = nm.substring(0,1);
+    		temp= temp.toUpperCase();
+    		MangerGreeting.setText("Hello "+temp+ nm.substring(1,nm.length())+",");
+    	}
     	if(combbox!=null)
     	{
     		FetchData();
     		
     	}
-    	Home.setStyle("-fx-background-color: none;");
-    	combbox.setStyle(bgcolor);
-//    	if(SelectEmpTypeCombobox!=null) {
-//    		SelectEmpTypeCombobox.setPromptText("Select the Employee Type");
-//	    	EmpOption = new ArrayList<String>();
-//	    	EmpOption.add("Developer");
-//	    	EmpOption.add("Designer");
-//	    	EmpOption.add("Network Manager");
-//	    	EmpOption.add("Resource Manager");
-//	    	EmpOption.add("Project Manager");
-//	    	SelectEmpTypeCombobox.getItems().addAll(EmpOption);
-//    	}
     	
     	// Tech Resources
     	if(TechResourcesTypes!=null)
     	{
-    		System.out.println("Hello Mona");
-    		TechResourcesTypes.setPromptText("Select the Employee Type");
 			TechResources = new ArrayList<String>();
-			TechResources.add("Developer");
-			TechResources.add("Designer");
-			TechResources.add("Network Manager");
-			TechResources.add("Resource Manager");
-			TechResources.add("Project Manager");
+			TechResources.add("WorkStation");
+			TechResources.add("Network");
+			TechResources.add("Electricity");
+			TechResources.add("Databases");
+			TechResources.add("Server");
 			TechResourcesTypes.getItems().addAll(TechResources);
 		}
     	if(TasksTable != null)
@@ -191,6 +190,8 @@ public class ProjectController {
     private void FetchData() {
      	List<Project> projects = projectManager.getProjectsfromDB();    	
     	List<String> projectNames = new ArrayList<String>();
+    	String projName=null;
+    	int temp=0;
     	for (Project project : projects) {
     		String pname = project.getName();
     		if(pname.length() > 15) {
@@ -199,14 +200,22 @@ public class ProjectController {
     		}
     		else
     		projectNames.add(project.getName());
+    		if(temp==Index) {
+    			projName=pname;
+    		}
+    		temp++;
 		}
+    	if(ProjectName!=null){
+    		ProjectName.setText(projName);
+    	}
     	ObservableList<String> list = null;
     	if(projectNames.size() > 0)
     		list = FXCollections.observableArrayList(projectNames);
 		if(list == null)
 			combbox.setPromptText("No Projects");
 		else 
-			combbox.setItems(list);
+		combbox.setItems(list);
+		combbox.getSelectionModel().select(Index);
     }
     
     private void FetchTasks() {
@@ -258,8 +267,12 @@ public class ProjectController {
     }
 
     @FXML
-    void ShowMenuitem(ActionEvent event) {
-    	System.out.println("Hello world, Anas");
+    void ShowMenuitem(ActionEvent event) throws Exception {
+     	Home.setStyle("-fx-background-color: none;");
+    	combbox.setStyle(bgcolor);
+    	int index= combbox.getSelectionModel().getSelectedIndex();
+    	Index= index;
+    	loadScene(event, "ProjectPages.fxml");	
     }
 
     @FXML
@@ -282,8 +295,24 @@ public class ProjectController {
 
     // Task Page Actions
     @FXML
-    void addTaskAction(ActionEvent event) {
-    	projectManager.addProjectTask(Index, TaskName.getText(), taskDetails.getText(), TaskStartDate.getValue(), TaskEndDate.getValue());
+    void addTaskAction(ActionEvent event) throws Exception {
+    	String nm=TaskName.getText(); 
+    	String detail=taskDetails.getText();
+    	LocalDate sd=  TaskStartDate.getValue();
+		LocalDate Ed=  TaskEndDate.getValue();
+		if(nm.isEmpty() || detail.isEmpty()) {
+			showDialog("Please fill out all the fields");
+			return ;
+		}
+    	if(sd.isAfter(Ed))
+		{
+			showDialog("End Date cann't be before Start date");
+			return ;
+		}
+    	
+    	projectManager.addProjectTask(Index, nm, detail, sd,Ed);
+    	loadScene(event, "ProjectPages.fxml");	
+   
     }
     
     // Resource Page Actions
@@ -299,8 +328,26 @@ public class ProjectController {
     }
     
     @FXML
-    void AddResourceAction(ActionEvent event) {
-    	projectManager.getProjects().get(Index).saveHumanResource(new Employee(Position.getText(), EmpName.getText(), ContactInfo.getText(), Integer.valueOf(Salary.getText())));
+    void AddResourceAction(ActionEvent event) throws Exception {
+    	String pos, nm, cont, wage; 
+    	pos= Position.getText();
+    	nm= EmpName.getText();
+    	cont= ContactInfo.getText();
+    	wage=Salary.getText();
+    	if(pos.isEmpty() || nm.isEmpty() || cont.isEmpty() || wage.isEmpty()) {
+    		showDialog("Please enter budget Correctly, Integer value Only");
+    		return;
+    	}
+    	int pay=0;
+    	try {
+    		pay=   Integer.valueOf(wage);
+    	}
+    	catch(Exception err) {    	
+    		showDialog("Please enter Salary Correctly, Integer value Only");
+    		return;
+    	}
+    	projectManager.getProjects().get(Index).saveHumanResource(new Employee(pos, nm, cont,pay));
+    	loadScene(event, "ResourcesForm.fxml");	
     }
     
 
@@ -308,7 +355,6 @@ public class ProjectController {
     void ShowEmployeeType(ActionEvent event) {
 
     }
-
    
 
     @FXML
@@ -318,10 +364,9 @@ public class ProjectController {
     
     
     // Tech Resources goes Here
-
     @FXML
-    void addtechResources(ActionEvent event) {
-
+    void addtechResources(ActionEvent event) throws Exception {
+    	loadScene(event, "Techresources.fxml");	
     }
 
     @FXML
@@ -333,4 +378,13 @@ public class ProjectController {
     void loadtechresources(ActionEvent event) {
 
     }   
+    
+    private void showDialog(String Msg) {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Information Dialog");
+    	alert.setHeaderText(null);
+    	alert.setContentText(Msg);
+    	alert.showAndWait();
+    	return;
+    }
 }

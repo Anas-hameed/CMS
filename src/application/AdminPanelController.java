@@ -1,5 +1,6 @@
 package application;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,18 +14,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AdminPanelController {
 
-	ProjectManager projectManager = ProjectManager.getInstance();
-	
+	ProjectManager projectManager = ProjectManager.getInstance();	
 	String bgcolor="-fx-background-color: #00008c;";
     String RemoveBg= "-fx-background-color: none;";
 	
@@ -55,6 +58,9 @@ public class AdminPanelController {
     @FXML
     private TextField ProjectDetails;
     
+    @FXML
+    private Text MangerGreeting;
+    
     void loadScene(ActionEvent event, String file) throws Exception{
     	AnchorPane root;
 		root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
@@ -78,6 +84,13 @@ public class AdminPanelController {
     
     @FXML
 	void initialize() throws Exception{
+    	if(MangerGreeting!=null)
+        {
+    		String nm= projectManager.getName();
+    		String temp = nm.substring(0,1);
+    		temp= temp.toUpperCase();
+    		MangerGreeting.setText("Hello "+temp+ nm.substring(1,nm.length())+",");
+        }
     	if(combbox!=null)
     	{
     		FetchData();
@@ -85,8 +98,8 @@ public class AdminPanelController {
 			public void run() {
 				final Node scrollBar = combbox.lookup(".scroll-bar:vertical");
 				scrollBar.setVisible(false);
-			}
-		});
+				}
+			});
     	}
     }  
         
@@ -140,8 +153,42 @@ public class AdminPanelController {
     // Add project controller
     @FXML
     void addProjectAction(ActionEvent event) throws Exception {
-    	Project project = new Project(ProjectName.getText(), ProjectDetails.getText(), ProjectStartDate.getValue(), ProjectEndDate.getValue(), Integer.valueOf(Budget.getText()));
-    	projectManager.saveProject(project);
-    	loadScene(event, "ManagerPanelPage.fxml");
+    	//    	Verification of the Entered Values
+    	String projname, projdetail;
+    	projname=ProjectName.getText();
+    	projdetail =ProjectDetails.getText();
+    	LocalDate sd=  ProjectStartDate.getValue();
+		LocalDate Ed=  ProjectEndDate.getValue();
+    	if(projname.isEmpty() || Budget.getText().isEmpty() || sd==null) {
+    		showDialog("Please fill out all the fields");
+    		return;
+    	}
+    	int projBg=0;
+    	try {    		
+    		 projBg=Integer.valueOf(Budget.getText());
+    	}
+    	catch(Exception err) {
+    		showDialog("Please enter budget Correctly, Integer value Only");
+    		return;
+    	}	
+		if(sd.isAfter(Ed))
+		{
+			showDialog("End Date cann't be before Start date");
+			return ;
+		}
+		Project project = new Project(projname,projdetail , sd,Ed, projBg);
+		projectManager.saveProject(project);
+		loadScene(event, "ManagerPanelPage.fxml");
+    	
     }
+    
+    private void showDialog(String Msg) {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Information Dialog");
+    	alert.setHeaderText(null);
+    	alert.setContentText(Msg);
+    	alert.showAndWait();
+    	return;
+    }
+    
 }
