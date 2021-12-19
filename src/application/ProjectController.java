@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import businesslogic.Employee;
+import businesslogic.HumanResource;
 import businesslogic.Project;
 import businesslogic.ProjectManager;
 import businesslogic.Task;
+import businesslogic.TechResource;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -123,22 +125,34 @@ public class ProjectController {
     private TableView<Task> TasksTable;
     
     @FXML
-    private TableView<Employee> EmpTable;
+    private TableView<HumanResource> EmpTable;
 
     @FXML
-    private TableColumn<Employee, String> EmpTableContact;
+    private TableColumn<HumanResource, String> EmpTableContact;
 
     @FXML
-    private TableColumn<Employee, Integer> EmpTableID;
+    private TableColumn<HumanResource, Integer> EmpTableID;
 
     @FXML
-    private TableColumn<Employee, String> EmpTableName;
+    private TableColumn<HumanResource, String> EmpTableName;
 
     @FXML
-    private TableColumn<Employee, String> EmpTablePosition;
+    private TableColumn<HumanResource, String> EmpTablePosition;
 
     @FXML
-    private TableColumn<Employee, Double> EmpTableSalary;
+    private TableColumn<HumanResource, Double> EmpTableSalary;
+    
+    @FXML
+    private TableColumn<TechResource, Double> TRBaseCost;
+
+    @FXML
+    private TableColumn<TechResource, String> TRType;
+
+    @FXML
+    private TableColumn<TechResource, Integer> TRQuantity;
+
+    @FXML
+    private TableView<TechResource> TRTable;
     
     @FXML
     private Text MangerGreeting;
@@ -184,6 +198,8 @@ public class ProjectController {
     		FetchTasks();
     	if(EmpTable != null)
     		FetchEmployees();
+    	if(TRTable != null)
+    		FetchTechResources();
     	
     } 
         
@@ -229,13 +245,21 @@ public class ProjectController {
     }
     
     private void FetchEmployees() {
-    	ObservableList<Employee> employees = FXCollections.observableList(projectManager.getProjects().get(Index).getHumanResource().getEmployeesfromDB());  	
-    	EmpTableName.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getName()));
-    	EmpTableContact.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getContact()));
-    	EmpTablePosition.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getPosition()));
-    	EmpTableSalary.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Double>(CellDataFeatures.getValue().getSalary()));
-    	EmpTableID.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Integer>(CellDataFeatures.getValue().getEmpID()));
-    	EmpTable.setItems(employees);
+    	ObservableList<HumanResource> humanResources = FXCollections.observableList(projectManager.getProjects().get(Index).getHumanResourcesfromDB());  	
+    	EmpTableName.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getEmployee().getName()));
+    	EmpTableContact.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getEmployee().getContact()));
+    	EmpTablePosition.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getEmployee().getPosition()));
+    	EmpTableSalary.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Double>(CellDataFeatures.getValue().getEmployee().getSalary()));
+    	EmpTableID.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Integer>(CellDataFeatures.getValue().getEmployee().getEmpID()));
+    	EmpTable.setItems(humanResources);
+    }
+    
+    private void FetchTechResources() {
+    	ObservableList<TechResource> techResources = FXCollections.observableList(projectManager.getProjects().get(Index).getTechResourcesfromDB());  	    
+    	TRType.setCellValueFactory(CellDataFeatures -> new ReadOnlyStringWrapper(CellDataFeatures.getValue().getName()));
+    	TRBaseCost.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Double>(CellDataFeatures.getValue().getBaseCost()));
+    	TRQuantity.setCellValueFactory(CellDataFeatures -> new ReadOnlyObjectWrapper<Integer>(CellDataFeatures.getValue().getQuantity()));
+    	TRTable.setItems(techResources);
     }
     
     void loadScene(ActionEvent event, String file) throws Exception{
@@ -346,7 +370,7 @@ public class ProjectController {
     		showDialog("Please enter Salary Correctly, Integer value Only");
     		return;
     	}
-    	projectManager.getProjects().get(Index).saveHumanResource(new Employee(pos, nm, cont,pay));
+    	projectManager.getProjects().get(Index).saveHumanResource(new HumanResource(new Employee(pos, nm, cont, pay)));
     	loadScene(event, "ResourcesForm.fxml");	
     }
     
@@ -366,11 +390,12 @@ public class ProjectController {
     // Tech Resources goes Here
     @FXML
     void addtechResources(ActionEvent event) throws Exception {
+    	projectManager.getProjects().get(Index).saveTechResource(new TechResource(TechResourcesTypes.getValue(), Double.valueOf(BaseCost.getText()), Integer.valueOf(Quantity.getText())));
     	loadScene(event, "Techresources.fxml");	
     }
 
     @FXML
-    void GobackResourcePage(ActionEvent event) throws Exception {
+    void GobackResourcePage(ActionEvent event) throws Exception {    	
     	loadScene(event, "ResourcesForm.fxml");
     }
 

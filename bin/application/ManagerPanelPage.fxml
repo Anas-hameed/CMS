@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -23,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -37,9 +31,9 @@
          <children>
             <HBox prefHeight="78.0" prefWidth="173.0" styleClass="left_sidPane" stylesheets="@application.css">
                <children>
-                  <ImageView fitHeight="49.0" fitWidth="52.0">
+                  <ImageView fitHeight="42.0" fitWidth="42.0">
                      <HBox.margin>
-                        <Insets left="10.0" top="20.0" />
+                        <Insets left="10.0" top="23.0" />
                      </HBox.margin>
                      <image>
                         <Image url="@Images/1.png" />
@@ -59,15 +53,15 @@
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost Management System" textAlignment="CENTER" wrappingWidth="188.13671875">
                      <HBox.margin>
-                        <Insets left="25.0" top="35.0" />
+                        <Insets left="60.0" top="35.0" />
                      </HBox.margin>
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Panel" textAlignment="RIGHT" wrappingWidth="178.513671875">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Panel" textAlignment="RIGHT" wrappingWidth="89.513671875">
                      <HBox.margin>
-                        <Insets left="20.0" top="35.0" />
+                        <Insets left="80.0" top="35.0" />
                      </HBox.margin>
                      <font>
                         <Font name="System Bold" size="14.0" />

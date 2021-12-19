@@ -78,15 +78,26 @@ public class MySQLHandler {
         return tasks;
 	}
 	
-	public List<Employee> getEmployees(HumanResource humanResource) {		        
+	public List<HumanResource> getHumanResources(Project project) {		        
         Session session = sf.openSession();
         Transaction trans = session.beginTransaction();
-        org.hibernate.query.Query<Employee> query = session.createQuery("FROM Employee WHERE HR_resourceID = :rid");
-        query.setParameter("rid", humanResource.getResourceID());
-        List<Employee> employees = query.getResultList();                    
+        org.hibernate.query.Query<HumanResource> query = session.createQuery("FROM HumanResource WHERE project_projectID = :pid");
+        query.setParameter("pid", project.getProjectID());
+        List<HumanResource> humanResources = query.getResultList();                    
         trans.commit();
         session.close();
-        return employees;
+        return humanResources;
+	}
+
+	public List<TechResource> getTechResources(Project project) {
+		Session session = sf.openSession();
+        Transaction trans = session.beginTransaction();
+        org.hibernate.query.Query<TechResource> query = session.createQuery("FROM TechResource WHERE project_projectID = :pid");
+        query.setParameter("pid", project.getProjectID());
+        List<TechResource> techResources = query.getResultList();                    
+        trans.commit();
+        session.close();
+        return techResources;
 	}
 	
 }

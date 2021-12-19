@@ -1,70 +1,69 @@
 package businesslogic;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class TechResource extends Resource{
-	private int workStations, networks, electricityCost, databasesNo, servers;
-
-	public TechResource(int workStations, int networks, int electricityCost, int databasesNo, int servers) {		
-		this.workStations = workStations;
-		this.networks = networks;
-		this.electricityCost = electricityCost;
-		this.databasesNo = databasesNo;
-		this.servers = servers;
+	private String type;
+	private double baseCost;
+	private int quantity;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Project project;
+	
+	public TechResource() {
+		this.type = null;
+		this.baseCost = 0;
+		this.quantity = 0;
 	}
+	
+	public TechResource(String type, double baseCost, int quantity) {
+		this.type = type;
+		this.baseCost = baseCost;
+		this.quantity = quantity;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public String getName() {
+		return type;
+	}
+
+	public void setName(String type) {
+		this.type = type;
+	}
+
+	public double getBaseCost() {
+		return baseCost;
+	}
+
+	public void setBaseCost(double baseCost) {
+		this.baseCost = baseCost;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}	
 
 	@Override
 	public double getCost() {
-		double total = 0;
-		total = workStations*1000 + networks*1000 + electricityCost + databasesNo*1000 + servers*1000;
-		setCost(total);
-		return cost;
+		return baseCost * quantity;
 	}
 
 	@Override
 	public void setCost(double cost) {
 		this.cost = cost;		
-	}
-
-	public int getWorkStations() {
-		return workStations;
-	}
-
-	public void setWorkStations(int workStations) {
-		this.workStations = workStations;
-	}
-
-	public int getNetworks() {
-		return networks;
-	}
-
-	public void setNetworks(int networks) {
-		this.networks = networks;
-	}
-
-	public int getElectricityCost() {
-		return electricityCost;
-	}
-
-	public void setElectricityCost(int electricityCost) {
-		this.electricityCost = electricityCost;
-	}
-
-	public int getDatabases() {
-		return databasesNo;
-	}
-
-	public void setDatabases(int databases) {
-		this.databasesNo = databases;
-	}
-
-	public int getServers() {
-		return servers;
-	}
-
-	public void setServers(int servers) {
-		this.servers = servers;
 	}
 	
 }

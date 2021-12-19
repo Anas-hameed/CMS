@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.layout.BorderPane?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProjectController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProjectController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -80,9 +87,11 @@
                   <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView prefHeight="196.0" prefWidth="438.0" GridPane.rowIndex="1">
+                  <TableView fx:id="TRTable" prefHeight="196.0" prefWidth="438.0" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn prefWidth="437.0" text="Tech Resources" />
+                      <TableColumn fx:id="TRType" prefWidth="74.0" text="Type" />
+                        <TableColumn fx:id="TRQuantity" prefWidth="64.0" text="Quantity" />
+                        <TableColumn fx:id="TRBaseCost" prefWidth="75.0" text="Base Cost" />
                     </columns>
                   </TableView>
                   <AnchorPane prefHeight="232.0" prefWidth="438.0">
@@ -104,7 +113,7 @@
                            </font>
                         </Text>
                         <TextField fx:id="BaseCost" layoutX="14.0" layoutY="178.0" prefHeight="26.0" prefWidth="315.0" promptText="Base Cost" styleClass="Inputs" stylesheets="@application.css" />
-                        <ComboBox fx:id="TechResourcesTypes" layoutX="14.0" layoutY="94.0" prefHeight="26.0" prefWidth="410.0" promptText="Select tech Resource type" styleClass="EmptypeBtn" stylesheets="@application.css" visibleRowCount="12">
+                        <ComboBox fx:id="TechResourcesTypes" layoutX="14.0" layoutY="94.0" prefHeight="26.0" prefWidth="410.0" promptText="Select TechResource Type" styleClass="EmptypeBtn" stylesheets="@application.css" visibleRowCount="12">
                            <padding>
                               <Insets left="-20.0" />
                            </padding>

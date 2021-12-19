@@ -18,10 +18,10 @@ public class Project {
 	private double budget, variance;
 	@OneToMany(mappedBy = "project", cascade = CascadeType.MERGE)
 	private List<Task> tasks = new ArrayList<Task>();
-	@OneToOne(cascade = CascadeType.ALL)
-	private TechResource techResource;
-	@OneToOne(cascade = CascadeType.ALL)
-	private HumanResource humanResource = new HumanResource();
+	@OneToMany(mappedBy = "project", cascade = CascadeType.MERGE)
+	private List<TechResource> techResources = new ArrayList<TechResource>();
+	@OneToMany(mappedBy = "project", cascade = CascadeType.MERGE)
+	private List<HumanResource> humanResources = new ArrayList<HumanResource>();
 	@ManyToOne(cascade = CascadeType.ALL)
 	private ProjectManager projectManager;
 	@Transient
@@ -110,22 +110,6 @@ public class Project {
 		this.projectManager = projectManager;
 	}
 
-	public TechResource getTechResource() {
-		return techResource;
-	}
-
-	public void setTechResource(TechResource techResource) {
-		this.techResource = techResource;
-	}
-
-	public HumanResource getHumanResource() {
-		return humanResource;
-	}
-
-	public void setHumanResource(HumanResource humanResource) {
-		this.humanResource = humanResource;
-	}
-
 	public List<Task> getTasks() {
 		return tasks;
 	}
@@ -138,10 +122,26 @@ public class Project {
 		return dbHandler.getProjectTasks(this);
 	}
 	
-	public void saveHumanResource(Employee employee) {		
-		humanResource.saveEmployee(employee);
+	public void saveHumanResource(HumanResource humanResource) {
+		humanResource.setProject(this);
 		humanResource.setCost(humanResource.getCost());
+		humanResources.add(humanResource);
 		dbHandler.saveorupdateObject(humanResource);
+	}
+	
+	public void saveTechResource(TechResource techResource) {
+		techResource.setProject(this);
+		techResource.setCost(techResource.getCost());
+		techResources.add(techResource);
+		dbHandler.saveorupdateObject(techResource);
+	}
+	
+	public List<HumanResource> getHumanResourcesfromDB() {
+		return dbHandler.getHumanResources(this);
+	}
+	
+	public List<TechResource> getTechResourcesfromDB() {
+		return dbHandler.getTechResources(this);
 	}
 	
 	public Task addTaskDetails(String name, String description, LocalDate startDate, LocalDate endDate) {
@@ -152,7 +152,8 @@ public class Project {
 	}
 	
 	public double getActualCost() {
-		return (techResource.getCost() + humanResource.getCost());
+		//return (techResource.getCost() + humanResource.getCost());
+		return 0;
 	}
 	
 }

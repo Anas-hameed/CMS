@@ -5,7 +5,7 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class Resource {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected int resourceID;
 	protected double cost;		
 
