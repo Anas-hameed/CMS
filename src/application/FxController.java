@@ -101,10 +101,7 @@ public class FxController {
     		showDialog("Please fills out all the feilds");
     		return;
     	}
-    	projectManager.setName(nm);
-    	projectManager.setContact(cont);
-    	projectManager.setUsername(usr);
-    	projectManager.setPassword(pswd);
+    	ProjectManager projectManager = new ProjectManager(nm, cont, usr, pswd);
     	projectManager.saveProjectManager();
     	showDialog("Project Manager account created sucessfully");
     	return;

@@ -61,7 +61,12 @@ public class MySQLHandler {
         Transaction trans = session.beginTransaction();
         org.hibernate.query.Query<Project> query = session.createQuery("FROM Project WHERE projectManager_empID = :pid");
         query.setParameter("pid", projectManager.getEmpID());
-        List<Project> projects = query.getResultList();                    
+        List<Project> projects = query.getResultList();
+        for (Project project : projects) {
+			project.setHumanResources(getHumanResources(project));
+			project.setTasks(getProjectTasks(project));
+			project.setTechResources(getTechResources(project));
+		}
         trans.commit();
         session.close();
         return projects;
