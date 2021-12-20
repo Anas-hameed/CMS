@@ -104,11 +104,11 @@
                <children>
                   <TableView fx:id="TasksTable" prefHeight="235.0" prefWidth="438.0" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn fx:id="TaskID" prefWidth="47.0" text="TaskID" />
-                        <TableColumn fx:id="Name" prefWidth="69.0" text="Name" />
-                        <TableColumn fx:id="StartDate" prefWidth="74.0" text="StartDate" />
-                        <TableColumn fx:id="EndDate" prefWidth="75.0" text="EndDate" />
-                        <TableColumn fx:id="Description" prefWidth="104.00003051757812" text="Description" />
+                      <TableColumn fx:id="TaskID" prefWidth="44.0" text="TaskID" />
+                        <TableColumn fx:id="Name" prefWidth="81.0" text="Name" />
+                        <TableColumn fx:id="StartDate" text="StartDate" />
+                        <TableColumn fx:id="EndDate" prefWidth="84.0" text="EndDate" />
+                        <TableColumn fx:id="Description" prefWidth="147.0" text="Description" />
                     </columns>
                   </TableView>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">

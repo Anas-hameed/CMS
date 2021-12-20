@@ -18,11 +18,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,6 +33,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 public class ProjectController {
 	
@@ -158,8 +162,7 @@ public class ProjectController {
     private Text MangerGreeting;
     
     @FXML
-    private ComboBox<String> performanceEval;
-    
+    private ComboBox<String> performanceEval;    
     
     // Controller value for the front-end Logic
     String bgcolor="-fx-background-color: #00008c;";
@@ -184,8 +187,7 @@ public class ProjectController {
     	{
     		FetchData();
     		
-    	}
-    	
+    	}	
     	// Tech Resources
     	if(TechResourcesTypes!=null)
     	{
@@ -198,13 +200,107 @@ public class ProjectController {
 			TechResourcesTypes.getItems().addAll(TechResources);
 		}
     	if(TasksTable != null)
+    	{
     		FetchTasks();
+    	}
     	if(EmpTable != null)
+    	{
     		FetchEmployees();
+    		addButtonToHumanResourceTable();
+    	}
     	if(TRTable != null)
+    	{
     		FetchTechResources();
+    		addButtonToTechResourceTable();
+    	}
     	
     } 
+    
+    private void addButtonToTechResourceTable() {
+        TableColumn<TechResource, Void> colBtn = new TableColumn("Modify");
+
+        Callback<TableColumn<TechResource, Void>, TableCell<TechResource, Void>> cellFactory = new Callback<TableColumn<TechResource, Void>, TableCell<TechResource, Void>>() {
+            @Override
+            public TableCell<TechResource, Void> call(final TableColumn<TechResource, Void> param) {
+                final TableCell<TechResource, Void> cell = new TableCell<TechResource, Void>() {
+
+                    private final Button btn = new Button("Edit");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                        	TechResource data = getTableView().getItems().get(getIndex());
+                            System.out.println("selectedData: " + data);
+                            System.out.println("TechResource ID::"+  data.getResourceID());
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        colBtn.setCellFactory(cellFactory);
+        TRTable.getColumns().add(colBtn);
+    }
+    
+    private void addButtonToHumanResourceTable() {
+        TableColumn<HumanResource, Void> colBtn = new TableColumn("Modify");
+
+        Callback<TableColumn<HumanResource, Void>, TableCell<HumanResource, Void>> cellFactory = new Callback<TableColumn<HumanResource, Void>, TableCell<HumanResource, Void>>() {
+            @Override
+            public TableCell<HumanResource, Void> call(final TableColumn<HumanResource, Void> param) {
+                final TableCell<HumanResource, Void> cell = new TableCell<HumanResource, Void>() {
+
+                    private final Button btn = new Button("Edit");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                        	HumanResource data = getTableView().getItems().get(getIndex());
+                            Employee emp= data.getEmployee();
+                        	System.out.println("selectedData: " + data);
+                            FXMLLoader loader= new FXMLLoader();
+                            loader.setLocation(getClass().getResource("/application/Sample.fxml"));
+                            try {
+                            	loader.load();
+                            }
+                           catch(Exception err){
+                        	   System.out.println("Error While Loadings");
+                            }
+                            UpdateController p  = loader.getController();
+                            p.SetTextfied(emp.getName(), emp.getPosition(), emp.getSalary(), emp.getContact());
+                            Parent parent = loader.getRoot(); 
+                            Stage stage= new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.initStyle(StageStyle.UTILITY);
+                            stage.show();
+                                      
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        colBtn.setCellFactory(cellFactory);
+        EmpTable.getColumns().add(colBtn);
+    }
         
     private void FetchData() {
      	List<Project> projects = projectManager.getProjectsfromDB();    	
