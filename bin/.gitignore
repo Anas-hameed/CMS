@@ -1,4 +1,8 @@
+/ExternalLib/
 /application/
 /businesslogic/
+/customexceptions/
 /database/
+/hibernate.cfg.xml
+/testfiles/
 /module-info.class

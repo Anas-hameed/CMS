@@ -1,12 +1,12 @@
 package businesslogic;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import javax.persistence.*;
 
-import database.MySQLHandler;
 import database.PersistenceHandler;
 
 @Entity
@@ -20,6 +20,7 @@ public class ProjectManager extends Employee {
 
 	private ProjectManager() {
 		super("ProjectManager", null, null, 0);
+		projects = new ArrayList<Project>();
 		dbHandler = PersistenceHandler.INSTANCE;
 	}
 	
@@ -27,6 +28,7 @@ public class ProjectManager extends Employee {
 		super("ProjectManager", name, contact, 0);
 		this.username = username;
 		this.password = password;
+		projects = new ArrayList<Project>();
 		dbHandler = PersistenceHandler.INSTANCE;
 	}
 	

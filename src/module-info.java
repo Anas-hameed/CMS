@@ -6,6 +6,7 @@ module CMS {
 	requires org.hibernate.orm.core;
 	requires java.persistence;
 	requires java.sql;
+	requires junit;
 	
 	opens application to javafx.graphics, javafx.fxml;
 	opens businesslogic to org.hibernate.orm.core;
