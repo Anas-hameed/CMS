@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -10,7 +11,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,7 +25,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -37,13 +39,13 @@
          <children>
             <HBox prefHeight="78.0" prefWidth="173.0" styleClass="left_sidPane" stylesheets="@application.css">
                <children>
-                  <ImageView fitHeight="42.0" fitWidth="42.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="23.0" />
-                     </HBox.margin>
+                  <ImageView fitHeight="49.0" fitWidth="52.0">
                      <image>
                         <Image url="@Images/1.png" />
                      </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </HBox.margin>
                   </ImageView>
                   <Text fx:id="MangerGreeting" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello Anas," wrappingWidth="84.0">
                      <font>
@@ -55,33 +57,12 @@
                   </Text>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="left_sidPane" stylesheets="@application.css" GridPane.columnIndex="1">
-               <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost Management System" textAlignment="CENTER" wrappingWidth="188.13671875">
-                     <HBox.margin>
-                        <Insets left="60.0" top="35.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Panel" textAlignment="RIGHT" wrappingWidth="89.513671875">
-                     <HBox.margin>
-                        <Insets left="80.0" top="35.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
             <VBox prefHeight="422.0" prefWidth="132.0" styleClass="left_sidPane" stylesheets="@application.css" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="Home" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: #00008c;" stylesheets="@application.css" text="Add Project">
+                  <Button fx:id="Home" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="162.0" stylesheets="@application.css" text="Add Project">
                      <styleClass>
                         <String fx:value="Sidebar-btn" />
                         <String fx:value="Sidebar-btnnotActive" />
-                        <String fx:value="SidebarActiveBtn" />
                      </styleClass>
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -111,31 +92,72 @@
                   </Button>
                </children>
             </VBox>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane GridPane.columnIndex="1" GridPane.rowSpan="2">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="522.0" minHeight="10.0" prefHeight="522.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="468.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="468.0" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="461.0" minHeight="10.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+                  <AnchorPane prefHeight="214.0" prefWidth="438.0" GridPane.rowIndex="2">
+                     <children>
+                        <AnchorPane layoutX="14.0" layoutY="17.0" prefHeight="184.0" prefWidth="400.0" style="-fx-border-color: rgba(0,0,0,0.2);">
+                           <children>
+                              <Button alignment="CENTER" layoutX="320.0" layoutY="150.0" mnemonicParsing="false" onAction="#showTechGraph" prefHeight="20.0" prefWidth="52.0" styleClass="Addbtn" stylesheets="@application.css" text="Show" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Text layoutX="22.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Variatiom of Cost on Tech Resources" wrappingWidth="202.13671875" />
+                              <BarChart prefHeight="150.0" prefWidth="372.0">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="139.0" prefWidth="342.0" GridPane.rowIndex="1">
+                     <children>
+                        <AnchorPane layoutX="14.0" layoutY="17.0" prefHeight="184.0" prefWidth="400.0" style="-fx-border-color: rgba(0,0,0,0.2);">
+                           <children>
+                              <Button alignment="CENTER" layoutX="320.0" layoutY="150.0" mnemonicParsing="false" onAction="#ShowHRVGraph" prefHeight="20.0" prefWidth="52.0" styleClass="Addbtn" stylesheets="@application.css" text="Show" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Text layoutX="23.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Variatiom of Cost on Human Resources" wrappingWidth="227.13671875" />
+                              <BarChart prefHeight="150.0" prefWidth="372.0">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </BarChart>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a Project" wrappingWidth="410.0">
+                        <Text fx:id="ProjectName" layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Name" wrappingWidth="410.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="ProjectDetails" layoutX="14.0" layoutY="165.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter Project Details" styleClass="Inputs" stylesheets="@application.css" />
-                        <DatePicker fx:id="ProjectStartDate" layoutX="14.0" layoutY="127.0" prefHeight="26.0" prefWidth="188.0" promptText="Start Date" styleClass="Inputs" stylesheets="@application.css" />
-                        <DatePicker fx:id="ProjectEndDate" layoutX="236.0" layoutY="127.0" prefHeight="26.0" prefWidth="188.0" promptText="Expeted End Date" styleClass="Inputs" stylesheets="@application.css" />
-                        <TextField fx:id="ProjectName" layoutX="14.0" layoutY="48.0" prefHeight="26.0" prefWidth="410.0" promptText="Enter the Project Name" styleClass="Inputs" stylesheets="@application.css" />
-                        <Button fx:id="addProject" alignment="CENTER" layoutX="14.0" layoutY="211.0" mnemonicParsing="false" onAction="#addProjectAction" prefHeight="32.0" prefWidth="116.0" styleClass="Addbtn" stylesheets="@application.css" text="Add Project" textFill="WHITE">
+                        <Text layoutX="14.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Performance" wrappingWidth="410.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="System Bold" size="16.0" />
                            </font>
-                        </Button>
-                        <TextField fx:id="Budget" layoutX="14.0" layoutY="90.0" prefHeight="26.0" prefWidth="410.0" promptText="Specify the Budget" styleClass="Inputs" stylesheets="@application.css" />
+                        </Text>
                      </children>
                   </AnchorPane>
                </children>

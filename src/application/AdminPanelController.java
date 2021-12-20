@@ -61,6 +61,10 @@ public class AdminPanelController {
     @FXML
     private Text MangerGreeting;
     
+
+    @FXML
+    private ComboBox<String> performanceEval;
+    
     void loadScene(ActionEvent event, String file) throws Exception{
     	AnchorPane root;
 		root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
@@ -121,7 +125,10 @@ public class AdminPanelController {
 		if(list == null)
 			combbox.setPromptText("No Projects");
 		else 
+		{
 			combbox.setItems(list);
+			performanceEval.setItems(list);
+		}
     }
     
     
@@ -132,13 +139,6 @@ public class AdminPanelController {
     	loadScene(event, "ManagerPanelPage.fxml");
     }
 
-    @FXML
-    void loadlogoutAction(ActionEvent event) throws Exception {
-    	combbox.setStyle(RemoveBg);
-    	Home.setStyle(RemoveBg);
-    	Logout.setStyle(bgcolor);
-    	loadborderScene(event, "SignInPage.fxml");
-    }
         
     @FXML
     void ShowMenuitem(ActionEvent event) throws Exception {
@@ -148,6 +148,25 @@ public class AdminPanelController {
     	ProjectController.Index= index;
     	System.out.println("Index is ::" + index);
     	loadScene(event, "ProjectPages.fxml");	
+    }
+    
+    
+    @FXML
+    void ShowResultPageAction(ActionEvent event) throws Exception {
+    	Home.setStyle("-fx-background-color: none;");
+    	performanceEval.setStyle(bgcolor);
+    	int index= performanceEval.getSelectionModel().getSelectedIndex();
+    	SampleController.Index= index;
+    	System.out.println("Index is ::" + index);
+    	loadScene(event, "PerformancePage.fxml");	
+    }
+    
+    @FXML
+    void loadlogoutAction(ActionEvent event) throws Exception {
+    	combbox.setStyle(RemoveBg);
+    	Home.setStyle(RemoveBg);
+    	Logout.setStyle(bgcolor);
+    	loadborderScene(event, "SignInPage.fxml");
     }
       
     // Add project controller

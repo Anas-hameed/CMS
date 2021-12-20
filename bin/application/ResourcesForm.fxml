@@ -58,7 +58,7 @@
             </HBox>
             <VBox prefHeight="422.0" prefWidth="132.0" styleClass="left_sidPane" stylesheets="@application.css" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="Home" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="162.0" stylesheets="@application.css" text="Home">
+                  <Button fx:id="Home" mnemonicParsing="false" onAction="#loadHome" prefHeight="50.0" prefWidth="162.0" stylesheets="@application.css" text="Add Project">
                      <styleClass>
                         <String fx:value="Sidebar-btn" />
                         <String fx:value="Sidebar-btnnotActive" />
@@ -76,6 +76,13 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="performanceEval" layoutX="10.0" layoutY="60.0" onAction="#ShowResultPageAction" prefHeight="50.0" prefWidth="162.0" promptText="Performance" stylesheets="@application.css" visibleRowCount="12">
+                     <styleClass>
+                        <String fx:value="Sidebar-btn" />
+                        <String fx:value="Sidebar-btnnotActive" />
+                        <String fx:value="Projectslider" />
+                     </styleClass>
                   </ComboBox>
                   <Button fx:id="Logout" layoutX="10.0" layoutY="154.0" mnemonicParsing="false" onAction="#loadlogoutAction" prefHeight="48.0" prefWidth="162.0" styleClass="Sidebar-btnnotActive" stylesheets="@application.css" text="Log Out">
                      <font>

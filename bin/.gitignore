@@ -2,5 +2,6 @@
 /application/
 /businesslogic/
 /database/
+/hibernate.cfg.out.xml
 /hibernate.cfg.xml
 /module-info.class

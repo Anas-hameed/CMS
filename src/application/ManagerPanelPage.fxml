@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -17,7 +23,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -90,6 +96,13 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="performanceEval" layoutX="10.0" layoutY="60.0" onAction="#ShowResultPageAction" prefHeight="50.0" prefWidth="162.0" promptText="Performance" stylesheets="@application.css" visibleRowCount="12">
+                     <styleClass>
+                        <String fx:value="Sidebar-btn" />
+                        <String fx:value="Sidebar-btnnotActive" />
+                        <String fx:value="Projectslider" />
+                     </styleClass>
                   </ComboBox>
                   <Button fx:id="Logout" layoutX="10.0" layoutY="154.0" mnemonicParsing="false" onAction="#loadlogoutAction" prefHeight="48.0" prefWidth="162.0" styleClass="Sidebar-btnnotActive" stylesheets="@application.css" text="Log Out">
                      <font>

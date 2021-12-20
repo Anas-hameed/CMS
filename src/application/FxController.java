@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -44,6 +45,7 @@ public class FxController {
 
     @FXML
     private TextField Contact;
+   
     
     private void loadBorderPaneScene(ActionEvent event, String file) {
     	try { 

@@ -153,14 +153,7 @@
 	-fx-background-color: none;
 }
 
-.date-picker-popup > .month-year-pane {
-    -fx-padding: 0.588883em 0.5em 0.666667em 0.5em; 
-    -fx-background-color: derive(#8a8aff,30%), 
-        linear-gradient(to bottom, derive(#8a8aff,-3%), 
-                                   derive(#8a8aff,5%) 50%, 
-                                   derive(#8a8aff,-3%));
-    -fx-background-insets: 0 0 0 0, 0 0 1 0;
-}
+
 
 .Addbtn{
 	-fx-padding: 0px 5px;
@@ -173,3 +166,9 @@
 .Addbtn:hover{
 	-fx-background-color: #00008c;
 }
+
+
+.default-color0.chart-bar { 
+	-fx-bar-fill: #00008c;
+}
+

@@ -157,6 +157,9 @@ public class ProjectController {
     @FXML
     private Text MangerGreeting;
     
+    @FXML
+    private ComboBox<String> performanceEval;
+    
     
     // Controller value for the front-end Logic
     String bgcolor="-fx-background-color: #00008c;";
@@ -230,7 +233,10 @@ public class ProjectController {
 		if(list == null)
 			combbox.setPromptText("No Projects");
 		else 
-		combbox.setItems(list);
+		{
+			combbox.setItems(list);
+			performanceEval.setItems(list);
+		}
 		combbox.getSelectionModel().select(Index);
     }
     
@@ -308,6 +314,16 @@ public class ProjectController {
     }
     
     @FXML
+    void ShowResultPageAction(ActionEvent event) throws Exception {
+    	Home.setStyle("-fx-background-color: none;");
+    	performanceEval.setStyle(bgcolor);
+    	int index= performanceEval.getSelectionModel().getSelectedIndex();
+    	SampleController.Index= index;
+    	System.out.println("Index is ::" + index);
+    	loadScene(event, "PerformancePage.fxml");	
+    }
+    
+    @FXML
     void loadTaskPage(ActionEvent event) throws Exception {
     	loadScene(event, "ProjectPages.fxml");	
     }
@@ -373,6 +389,7 @@ public class ProjectController {
     	projectManager.getProjects().get(Index).saveHumanResource(new HumanResource(new Employee(pos, nm, cont, pay)));
     	loadScene(event, "ResourcesForm.fxml");	
     }
+    
     
 
     @FXML
