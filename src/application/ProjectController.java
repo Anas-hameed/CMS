@@ -228,9 +228,9 @@ public class ProjectController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                        	TechResource data = getTableView().getItems().get(getIndex());
-                            System.out.println("selectedData: " + data);
-                            System.out.println("TechResource ID::"+  data.getResourceID());
+                        	TechResource TR = getTableView().getItems().get(getIndex());
+                            System.out.println("selectedData: " + TR);
+                            System.out.println("TechResource ID::"+  TR.getResourceID());
                             FXMLLoader loader= new FXMLLoader();
                             loader.setLocation(getClass().getResource("/application/UpdateTR.fxml"));
                             try {
@@ -240,7 +240,9 @@ public class ProjectController {
                         	   System.out.println("Error While Loadings");
                             }
                             UpdateController p  = loader.getController();
-                            p.SetTRTechResource(data.getName(), data.getBaseCost(), data.getQuantity());
+                            p.SetTRTechResource(TR.getName(), TR.getBaseCost(), TR.getQuantity());
+                            p.setProjectIndex(Index);
+                            p.setTR(TR);
                             Parent parent = loader.getRoot(); 
                             Stage stage= new Stage();
                             stage.setScene(new Scene(parent));
@@ -278,8 +280,8 @@ public class ProjectController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                        	HumanResource data = getTableView().getItems().get(getIndex());
-                            Employee emp= data.getEmployee();
+                        	HumanResource HR = getTableView().getItems().get(getIndex());
+                            Employee emp= HR.getEmployee();
                             FXMLLoader loader= new FXMLLoader();
                             loader.setLocation(getClass().getResource("/application/UpdateHR.fxml"));
                             try {
@@ -290,6 +292,8 @@ public class ProjectController {
                             }
                             UpdateController p  = loader.getController();
                             p.SetTextfied(emp.getName(), emp.getPosition(), emp.getSalary(), emp.getContact());
+                            p.setProjectIndex(Index);
+                            p.setHR(HR);
                             Parent parent = loader.getRoot(); 
                             Stage stage= new Stage();
                             stage.setScene(new Scene(parent));
@@ -462,13 +466,7 @@ public class ProjectController {
     	projectManager.addProjectTask(Index, nm, detail, sd,Ed);
     	loadScene(event, "ProjectPages.fxml");	
    
-    }
-    
-    // Resource Page Actions
-    @FXML
-    void ShowResources(ActionEvent event) {
-
-    }
+    }    
     
     @FXML
     void LoadTechResourcesPage(ActionEvent event) throws Exception {
@@ -500,19 +498,6 @@ public class ProjectController {
     }
     
     
-
-    @FXML
-    void ShowEmployeeType(ActionEvent event) {
-
-    }
-   
-
-    @FXML
-    void LoadResourcesPage(ActionEvent event) {
-
-    }
-    
-    
     // Tech Resources goes Here
     @FXML
     void addtechResources(ActionEvent event) throws Exception {
@@ -524,11 +509,6 @@ public class ProjectController {
     void GobackResourcePage(ActionEvent event) throws Exception {    	
     	loadScene(event, "ResourcesForm.fxml");
     }
-
-    @FXML
-    void loadtechresources(ActionEvent event) {
-
-    }   
     
     private void showDialog(String Msg) {
     	Alert alert = new Alert(AlertType.INFORMATION);

@@ -128,6 +128,9 @@ public class FxController {
     		projectManager.setProjects(projectManager.getProjectsfromDB());
     		loadAncherPaneScene(event, "ManagerPanelPage.fxml");
     	}
+    	else {
+    		showDialog("Incorrect Username/Password");
+		}
     }
       
     private void showDialog(String Msg) {

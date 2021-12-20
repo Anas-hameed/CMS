@@ -5,6 +5,7 @@ import java.util.List;
 
 import businesslogic.Project;
 import businesslogic.ProjectManager;
+import businesslogic.Task;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,16 +42,13 @@ public class SampleController {
     private ComboBox<String> combbox;
 
     @FXML
-    private BarChart<String, Double> BarGraph;
-
+    private BarChart<String, Double> HRBarGraph;
+    
     @FXML
-    private CategoryAxis ResourcesName;
+    private BarChart<String, Double> TRBarGraph;
 
     @FXML
     private Button Home;
-
-    @FXML
-    private NumberAxis Cost;
     
     @FXML
     private ComboBox<String> performanceEval;
@@ -79,22 +77,37 @@ public class SampleController {
      	{
      		FetchData();
      	}
- 		if(BarGraph!=null) {
- 			loadBarGraphData();
+ 		if(HRBarGraph!=null) {
+ 			loadBarHRGraphData();
+ 		}
+ 		if(TRBarGraph!=null) {
+ 			loadBarTRGraphData();
  		}
      }
  	
 	
-	private void loadBarGraphData() {
+	private void loadBarHRGraphData() {
 		Series<String, Double> set1= new XYChart.Series<>();
-    	set1.setName("Human(Resources)");
-    	set1.getData().add(new XYChart.Data("James", 600));
-    	set1.getData().add(new XYChart.Data("Anas", 200));
-    	set1.getData().add(new XYChart.Data("Mona", 300));
-    	set1.getData().add(new XYChart.Data("Shami", 100));
-    	set1.getData().add(new XYChart.Data("Humza", 1000));
-    	BarGraph.setLegendSide(Side.BOTTOM);
-    	BarGraph.getData().add(set1);
+    	set1.setName("Human Resources");
+    	ObservableList<XYChart.Data<String, Double>> data = FXCollections.observableArrayList();
+    	for (int i=0; i<projectManager.getProjects().get(Index).getHumanResources().size(); i++) {
+    		data.add(new XYChart.Data(projectManager.getProjects().get(Index).getHumanResources().get(i).getEmployee().getName(), projectManager.getProjects().get(Index).getHumanResources().get(i).getEmployee().getSalary()));
+		}
+    	set1.setData(data);
+    	HRBarGraph.setLegendSide(Side.BOTTOM);
+    	HRBarGraph.getData().add(set1);
+	}
+	
+	private void loadBarTRGraphData() {
+		Series<String, Double> set1= new XYChart.Series<>();
+    	set1.setName("Tech Resources");
+    	ObservableList<XYChart.Data<String, Double>> data = FXCollections.observableArrayList();
+    	for (int i=0; i<projectManager.getProjects().get(Index).getTechResources().size(); i++) {
+    		data.add(new XYChart.Data(projectManager.getProjects().get(Index).getTechResources().get(i).getName(), projectManager.getProjects().get(Index).getTechResources().get(i).getCost()));
+		}
+    	set1.setData(data);
+    	TRBarGraph.setLegendSide(Side.BOTTOM);
+    	TRBarGraph.getData().add(set1);
 	}
 	
         
@@ -181,7 +194,7 @@ public class SampleController {
     
     
     @FXML
-    void ShowHRVGraph(ActionEvent event) throws Exception{
+    void ShowHRGraph(ActionEvent event) throws Exception{
     	loadScene(event, "HumanResourceGraph.fxml");
     }
     

@@ -144,11 +144,39 @@ public class Project {
 		return dbHandler.getProjectTasks(this);
 	}
 	
+	public double getTotalTechResourcesCost() {
+		double total = 0;
+		for (TechResource techResource : techResources) {
+			total += techResource.getCost();
+		}
+		return total;
+	}
+	
+	public double getTotalHumanResourcesCost() {
+		double total = 0;
+		for (HumanResource humanResource : humanResources) {
+			total += humanResource.getCost();
+		}
+		return total;
+	}
+	
 	public void saveHumanResource(HumanResource humanResource) {
 		humanResource.setProject(this);
 		humanResource.getEmployee().setHR(humanResource);
 		humanResource.setCost(humanResource.getCost());
 		humanResources.add(humanResource);
+		dbHandler.saveorupdateObject(humanResource);
+	}
+	
+	public void updateHumanResource(HumanResource humanResource) {
+		humanResource.setCost(humanResource.getCost());
+		for (HumanResource HR : humanResources) {
+			if(HR.getEmployee().getEmpID() == humanResource.getEmployee().getEmpID()) {
+				HR.setCost(humanResource.getCost());
+				HR.setEmployee(humanResource.getEmployee());
+				break;
+			}				
+		}
 		dbHandler.saveorupdateObject(humanResource);
 	}
 	
@@ -158,6 +186,21 @@ public class Project {
 		techResources.add(techResource);
 		dbHandler.saveorupdateObject(techResource);
 	}
+	
+	public void updateTechResource(TechResource techResource) {
+		techResource.setCost(techResource.getCost());
+		for (TechResource TR : techResources) {
+			if(TR.getResourceID() == techResource.getResourceID()) {
+				TR.setBaseCost(techResource.getBaseCost());
+				TR.setName(techResource.getName());
+				TR.setQuantity(techResource.getQuantity());
+				TR.setCost(techResource.getCost());
+				break;
+			}
+		}
+		dbHandler.saveorupdateObject(techResource);
+	}
+	
 	
 	public List<HumanResource> getHumanResourcesfromDB() {
 		return dbHandler.getHumanResources(this);
@@ -175,8 +218,7 @@ public class Project {
 	}
 	
 	public double getActualCost() {
-		//return (techResource.getCost() + humanResource.getCost());
-		return 0;
+		return (getTotalHumanResourcesCost() + getTotalTechResourcesCost());
 	}
 	
 }
