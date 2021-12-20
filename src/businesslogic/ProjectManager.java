@@ -7,6 +7,7 @@ import java.util.Vector;
 import javax.persistence.*;
 
 import database.MySQLHandler;
+import database.PersistenceHandler;
 
 @Entity
 public class ProjectManager extends Employee {
@@ -15,16 +16,18 @@ public class ProjectManager extends Employee {
 	private List<Project> projects;
 	private final static ProjectManager INSTANCE = new ProjectManager();
 	@Transient
-	private MySQLHandler dbHandler = MySQLHandler.getInstance();
+	private PersistenceHandler dbHandler;
 
 	private ProjectManager() {
 		super("ProjectManager", null, null, 0);
+		dbHandler = PersistenceHandler.INSTANCE;
 	}
 	
 	public ProjectManager(String name, String contact, String username, String password) {
 		super("ProjectManager", name, contact, 0);
 		this.username = username;
 		this.password = password;
+		dbHandler = PersistenceHandler.INSTANCE;
 	}
 	
 	public static ProjectManager getInstance() {
@@ -53,14 +56,6 @@ public class ProjectManager extends Employee {
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
-	}
-	
-	public MySQLHandler getDbHandler() {
-		return dbHandler;
-	}
-
-	public void setDbHandler(MySQLHandler dbHandler) {
-		this.dbHandler = dbHandler;
 	}
 	
 	public void saveProjectManager() {

@@ -10,7 +10,7 @@ import org.hibernate.cfg.Configuration;
 
 import businesslogic.*;
 
-public class MySQLHandler {
+public class MySQLHandler extends PersistenceHandler{
 	private SessionFactory sf;
 	private final static MySQLHandler INSTANCE = new MySQLHandler();
 	

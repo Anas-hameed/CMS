@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import database.MySQLHandler;
+import database.PersistenceHandler;
 
 @Entity
 public class Project {
@@ -25,7 +26,7 @@ public class Project {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private ProjectManager projectManager;		
 	@Transient
-	private MySQLHandler dbHandler = MySQLHandler.getInstance();
+	private PersistenceHandler dbHandler;
 	
 	public Project() {
 		this.name = null;
@@ -37,6 +38,7 @@ public class Project {
 		tasks = new ArrayList<Task>();
 		techResources = new ArrayList<TechResource>();
 		humanResources = new ArrayList<HumanResource>();
+		dbHandler = PersistenceHandler.INSTANCE;
 	}
 	
 	public Project(String name, String description, LocalDate startDate, LocalDate endDate, double budget) {
@@ -49,6 +51,7 @@ public class Project {
 		tasks = new ArrayList<Task>();
 		techResources = new ArrayList<TechResource>();
 		humanResources = new ArrayList<HumanResource>();
+		dbHandler = PersistenceHandler.INSTANCE;
 	}
 
 	public String getName() {
