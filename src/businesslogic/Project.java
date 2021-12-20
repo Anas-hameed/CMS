@@ -17,13 +17,13 @@ public class Project {
 	private LocalDate startDate, endDate;
 	private double budget, variance;
 	@OneToMany(mappedBy = "project", cascade = CascadeType.MERGE)
-	private List<Task> tasks = new ArrayList<Task>();
+	private List<Task> tasks;
 	@OneToMany(mappedBy = "project", cascade = CascadeType.MERGE)
-	private List<TechResource> techResources = new ArrayList<TechResource>();
+	private List<TechResource> techResources;
 	@OneToMany(mappedBy = "project", cascade = CascadeType.MERGE)
-	private List<HumanResource> humanResources = new ArrayList<HumanResource>();
+	private List<HumanResource> humanResources;
 	@ManyToOne(cascade = CascadeType.ALL)
-	private ProjectManager projectManager;
+	private ProjectManager projectManager;		
 	@Transient
 	private MySQLHandler dbHandler = MySQLHandler.getInstance();
 	
@@ -34,6 +34,9 @@ public class Project {
 		this.endDate = null;
 		this.budget = 0;
 		this.variance = 0;
+		tasks = new ArrayList<Task>();
+		techResources = new ArrayList<TechResource>();
+		humanResources = new ArrayList<HumanResource>();
 	}
 	
 	public Project(String name, String description, LocalDate startDate, LocalDate endDate, double budget) {
@@ -43,6 +46,9 @@ public class Project {
 		this.endDate = endDate;
 		this.budget = budget;
 		this.variance = 0;
+		tasks = new ArrayList<Task>();
+		techResources = new ArrayList<TechResource>();
+		humanResources = new ArrayList<HumanResource>();
 	}
 
 	public String getName() {
@@ -118,12 +124,29 @@ public class Project {
 		this.tasks = tasks;
 	}
 	
+	public List<TechResource> getTechResources() {
+		return techResources;
+	}
+
+	public void setTechResources(List<TechResource> techResources) {
+		this.techResources = techResources;
+	}
+
+	public List<HumanResource> getHumanResources() {
+		return humanResources;
+	}
+
+	public void setHumanResources(List<HumanResource> humanResources) {
+		this.humanResources = humanResources;
+	}
+	
 	public List<Task> getProjectTasksfromDB() {
 		return dbHandler.getProjectTasks(this);
 	}
 	
 	public void saveHumanResource(HumanResource humanResource) {
 		humanResource.setProject(this);
+		humanResource.getEmployee().setHR(humanResource);
 		humanResource.setCost(humanResource.getCost());
 		humanResources.add(humanResource);
 		dbHandler.saveorupdateObject(humanResource);
