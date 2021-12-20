@@ -10,6 +10,9 @@ import businesslogic.Project;
 import businesslogic.ProjectManager;
 import businesslogic.Task;
 import businesslogic.TechResource;
+import customException.InvalidInputException;
+import customException.ResourceNotFound;
+import customException.illegalArgumentException;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -247,7 +250,7 @@ public class ProjectController {
                             Stage stage= new Stage();
                             stage.setScene(new Scene(parent));
                             stage.initStyle(StageStyle.UTILITY);
-                            stage.show();                    
+                            stage.show();     
                         });
                     }
 
@@ -381,24 +384,32 @@ public class ProjectController {
     	TRTable.setItems(techResources);
     }
     
-    void loadScene(ActionEvent event, String file) throws Exception{
-    	AnchorPane root;
-		root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
-		Scene scene = new Scene(root,600,500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		primaryStage.setScene(scene);
-		primaryStage.show();	
+    void loadScene(ActionEvent event, String file) throws ResourceNotFound {
+    	try {	
+    		AnchorPane root;
+			root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
+			Scene scene = new Scene(root,600,500);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			primaryStage.setScene(scene);
+			primaryStage.show();	
+	    }catch(Exception err) {			
+			throw new ResourceNotFound("Error Opening file! file not found");
+		}
     }
     
-    void loadborderScene(ActionEvent event, String file) throws Exception{
-    	BorderPane root;
-		root = (BorderPane)FXMLLoader.load(getClass().getResource(file));
-		Scene scene = new Scene(root,600,500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		primaryStage.setScene(scene);
-		primaryStage.show();
+    void loadborderScene(ActionEvent event, String file) throws ResourceNotFound{
+    	try {	
+	    	BorderPane root;
+			root = (BorderPane)FXMLLoader.load(getClass().getResource(file));
+			Scene scene = new Scene(root,600,500);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+	    }catch(Exception err) {			
+			throw new ResourceNotFound("Error Opening file! file not found");
+		}
     }    
     
     @FXML
@@ -432,7 +443,6 @@ public class ProjectController {
     	performanceEval.setStyle(bgcolor);
     	int index= performanceEval.getSelectionModel().getSelectedIndex();
     	SampleController.Index= index;
-    	System.out.println("Index is ::" + index);
     	loadScene(event, "PerformancePage.fxml");	
     }
     
@@ -455,14 +465,13 @@ public class ProjectController {
 		LocalDate Ed=  TaskEndDate.getValue();
 		if(nm.isEmpty() || detail.isEmpty()) {
 			showDialog("Please fill out all the fields");
-			return ;
+			throw new InvalidInputException("Invalid Input!  Null fields not Allowed");
 		}
     	if(sd.isAfter(Ed))
 		{
 			showDialog("End Date cann't be before Start date");
-			return ;
-		}
-    	
+			throw new illegalArgumentException("Invalid Argument ! End Date before Start Date");
+		}   	
     	projectManager.addProjectTask(Index, nm, detail, sd,Ed);
     	loadScene(event, "ProjectPages.fxml");	
    
@@ -470,7 +479,6 @@ public class ProjectController {
     
     @FXML
     void LoadTechResourcesPage(ActionEvent event) throws Exception {
-    	System.out.println("Hello");
     	loadScene(event, "Techresources.fxml");	
     }
     
@@ -482,8 +490,8 @@ public class ProjectController {
     	cont= ContactInfo.getText();
     	wage=Salary.getText();
     	if(pos.isEmpty() || nm.isEmpty() || cont.isEmpty() || wage.isEmpty()) {
-    		showDialog("Please enter budget Correctly, Integer value Only");
-    		return;
+    		showDialog("Please fill out all the fields");
+    		throw new InvalidInputException("Invalid Input!  Null fields not Allowed");
     	}
     	int pay=0;
     	try {
@@ -491,7 +499,7 @@ public class ProjectController {
     	}
     	catch(Exception err) {    	
     		showDialog("Please enter Salary Correctly, Integer value Only");
-    		return;
+    		throw new illegalArgumentException("Invalid Argument ! Integer value Expected");
     	}
     	projectManager.getProjects().get(Index).saveHumanResource(new HumanResource(new Employee(pos, nm, cont, pay)));
     	loadScene(event, "ResourcesForm.fxml");	
@@ -501,7 +509,23 @@ public class ProjectController {
     // Tech Resources goes Here
     @FXML
     void addtechResources(ActionEvent event) throws Exception {
-    	projectManager.getProjects().get(Index).saveTechResource(new TechResource(TechResourcesTypes.getValue(), Double.valueOf(BaseCost.getText()), Integer.valueOf(Quantity.getText())));
+    	String techR= TechResourcesTypes.getValue();
+    	double bCost;
+    	int unit;
+    	if(techR.isEmpty()) {
+    		showDialog("Please fill out all the fields");
+    		throw new InvalidInputException("Invalid Input!  Null fields not Allowed");	
+    	}
+    	try {
+    		bCost= Double.valueOf(BaseCost.getText());
+    		unit= Integer.valueOf(Quantity.getText());
+    	}
+    	catch(Exception err) {
+    		showDialog("Invalid Input format, Expected Integer or Double value");
+    		throw new illegalArgumentException("Invalid Argument ! Integer or Double Expected");
+    	}
+    	
+    	projectManager.getProjects().get(Index).saveTechResource(new TechResource(techR, bCost, unit));
     	loadScene(event, "Techresources.fxml");	
     }
 

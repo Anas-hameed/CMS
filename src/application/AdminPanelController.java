@@ -6,6 +6,9 @@ import java.util.List;
 
 import businesslogic.Project;
 import businesslogic.ProjectManager;
+import customException.InvalidInputException;
+import customException.ResourceNotFound;
+import customException.illegalArgumentException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,25 +68,34 @@ public class AdminPanelController {
     @FXML
     private ComboBox<String> performanceEval;
     
-    void loadScene(ActionEvent event, String file) throws Exception{
+    void loadScene(ActionEvent event, String file) throws ResourceNotFound{
     	AnchorPane root;
-		root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
-		Scene scene = new Scene(root,600,500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		try {
+			root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
+			Scene scene = new Scene(root,600,500);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		}catch(Exception err) {			
+			throw new ResourceNotFound("Error Opening file! file not found");
+		}
     	
     }
     
-    void loadborderScene(ActionEvent event, String file) throws Exception{
+    void loadborderScene(ActionEvent event, String file) throws ResourceNotFound{
     	BorderPane root;
-		root = (BorderPane)FXMLLoader.load(getClass().getResource(file));
-		Scene scene = new Scene(root,600,500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		primaryStage.setScene(scene);
-		primaryStage.show();
+    	try {    		
+    		root = (BorderPane)FXMLLoader.load(getClass().getResource(file));
+    		Scene scene = new Scene(root,600,500);
+    		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+    		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    		primaryStage.setScene(scene);
+    		primaryStage.show();
+    	}
+    	catch(Exception err) {
+    		throw new ResourceNotFound("Error Opening file! file not found");
+    	}
     }
     
     @FXML
@@ -146,7 +158,6 @@ public class AdminPanelController {
     	combbox.setStyle(bgcolor);
     	int index= combbox.getSelectionModel().getSelectedIndex();
     	ProjectController.Index= index;
-    	System.out.println("Index is ::" + index);
     	loadScene(event, "ProjectPages.fxml");	
     }
     
@@ -171,7 +182,7 @@ public class AdminPanelController {
       
     // Add project controller
     @FXML
-    void addProjectAction(ActionEvent event) throws Exception {
+    void addProjectAction(ActionEvent event) throws illegalArgumentException, InvalidInputException, ResourceNotFound {
     	//    	Verification of the Entered Values
     	String projname, projdetail;
     	projname=ProjectName.getText();
@@ -180,7 +191,7 @@ public class AdminPanelController {
 		LocalDate Ed=  ProjectEndDate.getValue();
     	if(projname.isEmpty() || Budget.getText().isEmpty() || sd==null) {
     		showDialog("Please fill out all the fields");
-    		return;
+    		throw new InvalidInputException("Invalid Input!  Null fields not Allowed");
     	}
     	int projBg=0;
     	try {    		
@@ -188,12 +199,12 @@ public class AdminPanelController {
     	}
     	catch(Exception err) {
     		showDialog("Please enter budget Correctly, Integer value Only");
-    		return;
+    		throw new illegalArgumentException("Invalid Argument ! Integer value Expected");
     	}	
 		if(sd.isAfter(Ed))
 		{
 			showDialog("End Date cann't be before Start date");
-			return ;
+			throw new illegalArgumentException("Invalid Argument ! End Date before Start Date");
 		}
 		Project project = new Project(projname,projdetail , sd,Ed, projBg);
 		projectManager.saveProject(project);

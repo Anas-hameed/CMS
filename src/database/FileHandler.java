@@ -22,8 +22,19 @@ public class FileHandler extends PersistenceHandler {
 
 	@Override
 	public void saveorupdateObject(Object object) {
-		// TODO Auto-generated method stub
-		
+		FileOutputStream f;
+		try {
+			f = new FileOutputStream(new File("Generic.txt"));
+			ObjectOutputStream o = new ObjectOutputStream(f);
+			o.writeObject(object);	
+			o.close();
+			f.close();		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
