@@ -31,47 +31,41 @@
          <children>
             <AnchorPane prefHeight="53.0" prefWidth="434.0">
                <children>
-                  <Label layoutX="21.0" layoutY="10.0" prefHeight="20.0" prefWidth="61.0" text="Name">
+                  <Label layoutX="21.0" layoutY="10.0" prefHeight="20.0" prefWidth="61.0" text="Type">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="UpdateName" layoutX="89.0" layoutY="2.0" prefHeight="26.0" prefWidth="333.0" styleClass="Inputs" stylesheets="@application.css" />
+                  <ComboBox fx:id="TechResourcesTypes" layoutX="88.0" layoutY="6.0" prefHeight="26.0" prefWidth="333.0" promptText="Select TechResource Type" styleClass="EmptypeBtn" stylesheets="@application.css" visibleRowCount="12">
+                     <padding>
+                        <Insets left="-20.0" />
+                     </padding>
+                  </ComboBox>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="51.0" prefWidth="434.0">
                <children>
-                  <Label layoutX="21.0" layoutY="10.0" prefHeight="20.0" prefWidth="61.0" text="Position">
+                  <Label layoutX="21.0" layoutY="10.0" prefHeight="20.0" prefWidth="61.0" text="Quatity">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="UpdatePos" layoutX="89.0" layoutY="2.0" prefHeight="26.0" prefWidth="333.0" styleClass="Inputs" stylesheets="@application.css" />
+                  <TextField fx:id="UpdateQuantity" layoutX="89.0" layoutY="2.0" prefHeight="26.0" prefWidth="333.0" styleClass="Inputs" stylesheets="@application.css" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="10.0" layoutY="50.0" prefHeight="49.0" prefWidth="434.0">
                <children>
-                  <Label layoutX="21.0" layoutY="10.0" prefHeight="17.0" prefWidth="53.0" text="Salary">
+                  <Label layoutX="18.0" layoutY="11.0" prefHeight="20.0" prefWidth="71.0" text="Base Cost">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="UpdateSalary" layoutX="89.0" layoutY="2.0" prefHeight="26.0" prefWidth="333.0" styleClass="Inputs" stylesheets="@application.css" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="90.0" prefHeight="57.0" prefWidth="434.0">
-               <children>
-                  <Label layoutX="21.0" layoutY="10.0" prefHeight="17.0" prefWidth="53.0" text="Contact">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="UpdateContact" layoutX="89.0" layoutY="2.0" prefHeight="26.0" prefWidth="333.0" styleClass="Inputs" stylesheets="@application.css" />
+                  <TextField fx:id="UpdatBaseCost" layoutX="89.0" layoutY="2.0" prefHeight="26.0" prefWidth="333.0" styleClass="Inputs" stylesheets="@application.css" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="10.0" layoutY="130.0" prefHeight="53.0" prefWidth="434.0">
                <children>
-                  <Button alignment="CENTER" layoutX="339.0" layoutY="14.0" mnemonicParsing="false" onAction="#UpdateAction" prefHeight="26.0" prefWidth="81.0" styleClass="Addbtn" stylesheets="@application.css" text="Update" textFill="WHITE">
+                  <Button alignment="CENTER" layoutX="339.0" layoutY="14.0" mnemonicParsing="false" onAction="#UpdateTRAction" prefHeight="26.0" prefWidth="81.0" styleClass="Addbtn" stylesheets="@application.css" text="Update" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

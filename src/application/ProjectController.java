@@ -231,6 +231,21 @@ public class ProjectController {
                         	TechResource data = getTableView().getItems().get(getIndex());
                             System.out.println("selectedData: " + data);
                             System.out.println("TechResource ID::"+  data.getResourceID());
+                            FXMLLoader loader= new FXMLLoader();
+                            loader.setLocation(getClass().getResource("/application/UpdateTR.fxml"));
+                            try {
+                            	loader.load();
+                            }
+                           catch(Exception err){
+                        	   System.out.println("Error While Loadings");
+                            }
+                            UpdateController p  = loader.getController();
+                            p.SetTRTechResource(data.getName(), data.getBaseCost(), data.getQuantity());
+                            Parent parent = loader.getRoot(); 
+                            Stage stage= new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.initStyle(StageStyle.UTILITY);
+                            stage.show();                    
                         });
                     }
 
@@ -265,9 +280,8 @@ public class ProjectController {
                         btn.setOnAction((ActionEvent event) -> {
                         	HumanResource data = getTableView().getItems().get(getIndex());
                             Employee emp= data.getEmployee();
-                        	System.out.println("selectedData: " + data);
                             FXMLLoader loader= new FXMLLoader();
-                            loader.setLocation(getClass().getResource("/application/Sample.fxml"));
+                            loader.setLocation(getClass().getResource("/application/UpdateHR.fxml"));
                             try {
                             	loader.load();
                             }
@@ -280,8 +294,7 @@ public class ProjectController {
                             Stage stage= new Stage();
                             stage.setScene(new Scene(parent));
                             stage.initStyle(StageStyle.UTILITY);
-                            stage.show();
-                                      
+                            stage.show();          
                         });
                     }
 
