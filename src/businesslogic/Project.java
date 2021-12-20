@@ -1,12 +1,10 @@
 package businesslogic;
-
+import customException.illegalArgumentException; 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
-
-import database.MySQLHandler;
 import database.PersistenceHandler;
 
 @Entity
@@ -33,7 +31,7 @@ public class Project {
 		this.description = null;
 		this.startDate = null;
 		this.endDate = null;
-		this.budget = 0;
+		this.budget = 0;	
 		this.variance = 0;
 		tasks = new ArrayList<Task>();
 		techResources = new ArrayList<TechResource>();
@@ -90,8 +88,13 @@ public class Project {
 		return budget;
 	}
 
-	public void setBudget(double budget) {
-		this.budget = budget;
+	public void setBudget(double budget) throws illegalArgumentException {
+		if(budget>=0) {
+			this.budget = budget;
+		}
+		else {
+			throw new illegalArgumentException("Ilegal Input, Budget value Cann't be Negative");
+		}
 	}
 
 	public double getVariance() {

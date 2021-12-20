@@ -6,6 +6,7 @@ import java.util.List;
 import businesslogic.Project;
 import businesslogic.ProjectManager;
 import businesslogic.Task;
+import customException.ResourceNotFound;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -144,24 +145,32 @@ public class SampleController {
     
     
     void loadScene(ActionEvent event, String file) throws Exception{
-    	AnchorPane root;
-		root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
-		Scene scene = new Scene(root,600,500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		primaryStage.setScene(scene);
-		primaryStage.show();
+	  try {
+    		AnchorPane root;
+			root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
+			Scene scene = new Scene(root,600,500);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		}catch(Exception err) {
+    		throw new ResourceNotFound("Error Opening file! file not found");
+    	}
     	
     }
     
     void loadborderScene(ActionEvent event, String file) throws Exception{
-    	BorderPane root;
-		root = (BorderPane)FXMLLoader.load(getClass().getResource(file));
-		Scene scene = new Scene(root,600,500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		primaryStage.setScene(scene);
-		primaryStage.show();
+	   try {
+    		BorderPane root;
+			root = (BorderPane)FXMLLoader.load(getClass().getResource(file));
+			Scene scene = new Scene(root,600,500);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+	   }catch(Exception err) {
+    		throw new ResourceNotFound("Error Opening file! file not found");
+    	}
     }
     
     

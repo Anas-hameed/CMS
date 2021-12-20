@@ -10,7 +10,7 @@ import businesslogic.Task;
 import businesslogic.TechResource;
 
 public abstract class PersistenceHandler {
-	public static PersistenceHandler INSTANCE;
+	public static PersistenceHandler INSTANCE ;
 	public PersistenceHandler() {
 		
 	}

@@ -6,10 +6,14 @@ import java.util.List;
 import businesslogic.HumanResource;
 import businesslogic.ProjectManager;
 import businesslogic.TechResource;
+import customException.InvalidInputException;
+import customException.illegalArgumentException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
 public class UpdateController {
 	
@@ -68,6 +72,7 @@ public class UpdateController {
 		Index = index;		
 	}
     
+    
     public void SetTextfied(String name, String Pos, double salary, String Cont) {
     	UpdateName.setText(name);
     	UpdatePos.setText(Pos);
@@ -83,23 +88,65 @@ public class UpdateController {
 
     // Human Resources Update
     @FXML
-    void UpdateAction(ActionEvent event) {
+    void UpdateAction(ActionEvent event)throws Exception {
+    	String pos, nm, cont, wage; 
+    	pos=UpdatePos.getText();
+    	nm= UpdateName.getText();
+    	cont=UpdateContact.getText();
+    	wage=UpdateSalary.getText();
+    	if(pos.isEmpty() || nm.isEmpty() || cont.isEmpty() || wage.isEmpty()) {
+    		showDialog("Please fill out all the fields");
+    		throw new InvalidInputException("Invalid Input!  Null fields not Allowed");
+    	}
+    	double pay=0;
+    	try {
+    		pay=   Double.valueOf(wage);
+    	}
+    	catch(Exception err) {    	
+    		showDialog("Please enter Salary Correctly, Integer value Only");
+    		throw new illegalArgumentException("Invalid Argument ! Integer value Expected");
+    	}
+    	
     	HR.getEmployee().setName(UpdateName.getText());
     	HR.getEmployee().setPosition(UpdatePos.getText());
-    	HR.getEmployee().setSalary(Double.valueOf(UpdateSalary.getText()));
+    	HR.getEmployee().setSalary(Double.valueOf(pay));
     	HR.getEmployee().setContact(UpdateContact.getText());
     	projectManager.getProjects().get(Index).updateHumanResource(HR);
+    	showDialog("Update was Sucessfull");
     }
+    
     
     // Tech Resources updates
     @FXML
-    void UpdateTRAction(ActionEvent event) {
-    	TR.setName(TechResourcesTypes.getValue());
-    	TR.setBaseCost(Double.valueOf(UpdatBaseCost.getText()));
-    	TR.setQuantity(Integer.valueOf(UpdateQuantity.getText()));
+    void UpdateTRAction(ActionEvent event) throws Exception{
+    	
+    	String techR= TechResourcesTypes.getValue();
+    	double bCost;
+    	int unit;
+    	if(techR.isEmpty()) {
+    		showDialog("Please fill out all the fields");
+    		throw new InvalidInputException("Invalid Input!  Null fields not Allowed");	
+    	}
+    	try {
+    		bCost= Double.valueOf(UpdatBaseCost.getText());
+    		unit= Integer.valueOf(UpdateQuantity.getText());
+    	}
+    	catch(Exception err) {
+    		showDialog("Invalid Input format, Expected Integer or Double value");
+    		throw new illegalArgumentException("Invalid Argument ! Integer or Double Expected");
+    	}
+    	TR.setName(techR);
+    	TR.setBaseCost(bCost);
+    	TR.setQuantity(unit);
     	projectManager.getProjects().get(Index).updateTechResource(TR);
     }
-
-	
-
+    
+    private void showDialog(String Msg) {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Information Dialog");
+    	alert.setHeaderText(null);
+    	alert.setContentText(Msg);
+    	alert.showAndWait();
+    	return;
+    }
 }

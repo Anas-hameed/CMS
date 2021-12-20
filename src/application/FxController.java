@@ -1,6 +1,6 @@
 package application;
 
-import java.io.IOException;
+import customException.*;
 import java.util.Vector;
 import businesslogic.ProjectManager;
 import javafx.event.ActionEvent;
@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -47,7 +46,7 @@ public class FxController {
     private TextField Contact;
    
     
-    private void loadBorderPaneScene(ActionEvent event, String file) {
+    private void loadBorderPaneScene(ActionEvent event, String file) throws ResourceNotFound {
     	try { 
         	BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource(file));
     		Scene scene = new Scene(root,600,500);
@@ -55,14 +54,12 @@ public class FxController {
     		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
     		primaryStage.setScene(scene);
     		primaryStage.show();
-    	}
-    	catch(Exception err) {
-    		System.out.println(err);
-    		System.out.println("_________________________________________________");
+    	}catch(Exception err) {			
+			throw new ResourceNotFound("Error Opening file! file not found");
 		}
     }
     
-    private void loadAncherPaneScene(ActionEvent event, String file) {
+    private void loadAncherPaneScene(ActionEvent event, String file)  throws ResourceNotFound  {
     	try { 
         	AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource(file));
     		Scene scene = new Scene(root,600,500);
@@ -70,28 +67,25 @@ public class FxController {
     		Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
     		primaryStage.setScene(scene);
     		primaryStage.show();
-    	}
-    	catch(Exception err) {
-    		System.out.println(err);
-    		System.out.println("_________________________________________________");
+	    }catch(Exception err) {			
+			throw new ResourceNotFound("Error Opening file! file not found");
 		}
     }
     
 
     @FXML
-    void LoadSignUpPage(ActionEvent event) throws IOException {
+    void LoadSignUpPage(ActionEvent event) throws ResourceNotFound {
     	loadBorderPaneScene(event, "SignUpPage.fxml");
     }
 
     @FXML
-    void LoadSigInPage(ActionEvent event) {
+    void LoadSigInPage(ActionEvent event) throws ResourceNotFound {
     	loadBorderPaneScene(event, "SignInPage.fxml");
-
     }
     
     // Sign up page action goes here
     @FXML
-    void LoadSignUp(ActionEvent event) {
+    void LoadSignUp(ActionEvent event) throws InvalidInputException {
     	String nm, cont, usr, pswd;
     	nm= Name.getText(); 
     	cont= Contact.getText(); 
@@ -99,7 +93,7 @@ public class FxController {
     	pswd=UserPassword.getText(); 
     	if(nm.isEmpty() || cont.isEmpty() || usr.isEmpty() || pswd.isEmpty()) {
     		showDialog("Please fills out all the feilds");
-    		return;
+    		throw new InvalidInputException("Invalid Input!  Null fields not Allowed");
     	}
     	ProjectManager projectManager = new ProjectManager(nm, cont, usr, pswd);
     	projectManager.saveProjectManager();
@@ -108,14 +102,14 @@ public class FxController {
     }
     
     @FXML
-    void LoadSigInScreen(ActionEvent event) {
+    void LoadSigInScreen(ActionEvent event) throws UnauthorizedAcessResources, InvalidInputException, illegalArgumentException, ResourceNotFound {
     	// authentication for the user required Here
     	String usrname, paswd;
     	usrname= Username.getText() ; 
     	paswd= UserPassword.getText(); 
     	if(usrname.isEmpty() || paswd.isEmpty()) {
     		showDialog("Warning! User name or password cann't be Null");
-    		return;
+    		throw new InvalidInputException("Invalid Input! UserName or Password is Null");
     	}
     	
     	Vector<String> managerinfo = projectManager.verify(Username.getText(), UserPassword.getText());
@@ -130,6 +124,7 @@ public class FxController {
     	}
     	else {
     		showDialog("Incorrect Username/Password");
+    		throw new UnauthorizedAcessResources("403! User not found");
 		}
     }
       

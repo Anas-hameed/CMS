@@ -77,6 +77,7 @@ public class ProjectManager extends Employee {
 	}
 	
 	public Vector<String> verify(String un, String pass) {
+		dbHandler = PersistenceHandler.INSTANCE;
 		return dbHandler.verifyLogin(un, pass);
 	}
 	
