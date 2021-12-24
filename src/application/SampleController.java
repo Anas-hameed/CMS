@@ -23,6 +23,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -38,6 +39,12 @@ public class SampleController {
 
     @FXML
     private Button Logout;
+    
+    @FXML
+    private Label budgetLabel;
+
+    @FXML
+    private Label varianceLabel;
 
     @FXML
     private ComboBox<String> combbox;
@@ -83,6 +90,12 @@ public class SampleController {
  		}
  		if(TRBarGraph!=null) {
  			loadBarTRGraphData();
+ 		}
+ 		if(budgetLabel != null) {
+ 			budgetLabel.setText(projectManager.getProjects().get(Index).getBudget() + "");
+ 		}
+ 		if(varianceLabel != null) {
+ 			varianceLabel.setText(projectManager.getProjects().get(Index).getVariance() + "");
  		}
      }
  	
